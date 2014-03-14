@@ -10,28 +10,6 @@ use Traversable;
  */
 class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 {
-
-	/**
-	 * All standalone elements
-	 * @var array
-	 */
-	protected static $standalone = array(
-		'area',
-		'base',
-		'basefont',
-		'br',
-		'col',
-		'frame',
-		'hr',
-		'img',
-		'input',
-		'isindex',
-		'link',
-		'meta',
-		'novalidate',
-		'param'
-	);
-
 	/**
 	 * @var array
 	 */
@@ -138,12 +116,14 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 				case 'declare':
 				case 'defer':
 				case 'disabled':
+				case 'formnovalidate':
+				case 'multiple':
+				case 'nowrap':
+				case 'novalidate':
 				case 'ismap':
 				case 'readonly':
 				case 'required':
 				case 'selected':
-				case 'multiple':
-				case 'nowrap':
 					if($value) {
 						$buffer .= ' ' . $name;
 					}
