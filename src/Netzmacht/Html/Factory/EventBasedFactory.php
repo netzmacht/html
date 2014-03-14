@@ -16,6 +16,15 @@ class EventBasedFactory
 
 
 	/**
+	 * @param EventDispatcherInterface $eventDispatcher
+	 */
+	function __construct(EventDispatcherInterface $eventDispatcher)
+	{
+		$this->eventDispatcher = $eventDispatcher;
+	}
+
+
+	/**
 	 * @param $tag
 	 * @param array $attributes
 	 * @return \Netzmacht\Html\Element

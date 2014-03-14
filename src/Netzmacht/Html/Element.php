@@ -15,14 +15,14 @@ use Netzmacht\Html\Factory\SimpleFactory;
 abstract class Element implements GenerateInterface
 {
 	/**
-	 * @var string
-	 */
-	protected $tag;
-
-	/**
 	 * @var FactoryInterface
 	 */
 	protected static $factory;
+
+	/**
+	 * @var string
+	 */
+	protected $tag;
 
 	/**
 	 * @var Attributes
@@ -192,7 +192,7 @@ abstract class Element implements GenerateInterface
 	 */
 	public static function create($tag, array $attributes=array())
 	{
-		static::getFactory()->createElement($tag, $attributes);
+		return static::getFactory()->createElement($tag, $attributes);
 	}
 
 
