@@ -95,7 +95,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function hasClass($name)
 	{
-		$classes = $this->getAttribute('class');
+		$classes = $this->get('class');
 
 		return in_array($name, $classes);
 	}
