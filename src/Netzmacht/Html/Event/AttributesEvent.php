@@ -3,8 +3,9 @@
 namespace Netzmacht\Html\Event;
 
 use Netzmacht\Html\Attributes;
+use Symfony\Component\EventDispatcher\Event;
 
-class AttributesEvent
+class AttributesEvent extends Event
 {
 
 	/**
