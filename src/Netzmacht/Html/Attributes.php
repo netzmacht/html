@@ -90,6 +90,48 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 
 
 	/**
+	 * @param $name
+	 * @return bool
+	 */
+	public function hasClass($name)
+	{
+		$classes = $this->getAttribute('class');
+
+		return in_array($name, $classes);
+	}
+
+
+	/**
+	 * @param $name
+	 * @return $this
+	 */
+	public function addClass($name)
+	{
+		if(!$this->hasClass($name)) {
+			$this->attributes['class'][] = $name;
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * @param $name
+	 * @return $this
+	 */
+	public function removeClass($name)
+	{
+		if($this->hasClass($name)) {
+			$index = array_search($name, $this->attributes['class']);
+			unset($this->attributes['class'][$index]);
+			$this->attributes['class'] = array_values($this->attributes['class']);
+		}
+
+		return $this;
+	}
+
+
+	/**
 	 * (PHP 5 &gt;= 5.0.0)<br/>
 	 * Retrieve an external iterator
 	 * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
