@@ -30,7 +30,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param $value
 	 * @return $this
 	 */
-	public function set($name, $value)
+	public function setAttribute($name, $value)
 	{
 		$this->attributes[$name] = $value;
 
@@ -43,9 +43,9 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param null $default
 	 * @return mixed
 	 */
-	public function get($name, $default=null)
+	public function getAttribute($name, $default=null)
 	{
-		if($this->has($name)) {
+		if($this->hasAttribute($name)) {
 			return $this->attributes[$name];
 		}
 
@@ -57,7 +57,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param $name
 	 * @return bool
 	 */
-	public function has($name)
+	public function hasAttribute($name)
 	{
 		return isset($this->attributes[$name]);
 	}
@@ -67,7 +67,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param $name
 	 * @return $this
 	 */
-	public function remove($name)
+	public function removeAttribute($name)
 	{
 		unset($this->attributes[$name]);
 
@@ -79,10 +79,10 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param array $attributes
 	 * @return $this
 	 */
-	public function add(array $attributes)
+	public function addAttributes(array $attributes)
 	{
 		foreach($attributes as $name => $value) {
-			$this->set($name, $value);
+			$this->setAttribute($name, $value);
 		}
 
 		return $this;
@@ -95,7 +95,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function hasClass($name)
 	{
-		$classes = $this->get('class');
+		$classes = $this->getAttribute('class');
 
 		return in_array($name, $classes);
 	}
@@ -112,6 +112,27 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 		}
 
 		return $this;
+	}
+
+
+	/**
+	 * @param $value
+	 * @return $this
+	 */
+	public function setId($value)
+	{
+		$this->setAttribute('id', $value);
+
+		return $this;
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->getAttribute('id');
 	}
 
 
@@ -209,7 +230,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function offsetExists($offset)
 	{
-		return $this->has($offset);
+		return $this->hasAttribute($offset);
 	}
 
 
@@ -224,7 +245,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function offsetGet($offset)
 	{
-		return $this->get($offset);
+		return $this->getAttribute($offset);
 	}
 
 
@@ -242,7 +263,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function offsetSet($offset, $value)
 	{
-		$this->set($offset, $value);
+		$this->setAttribute($offset, $value);
 	}
 
 
@@ -257,7 +278,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function offsetUnset($offset)
 	{
-		$this->remove($offset);
+		$this->removeAttribute($offset);
 	}
 
 

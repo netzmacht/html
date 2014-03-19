@@ -12,7 +12,7 @@ use Netzmacht\Html\Factory\SimpleFactory;
  * Class Node
  * @package Netzmacht\FormHelper\Html
  */
-abstract class Element extends AttributesAware implements GenerateInterface
+abstract class Element extends Attributes implements GenerateInterface
 {
 	/**
 	 * @var FactoryInterface
@@ -71,8 +71,10 @@ abstract class Element extends AttributesAware implements GenerateInterface
 	/**
 	 * @return string
 	 */
-	abstract public function generate();
-
+	protected function generateAttributes()
+	{
+		return parent::generate();
+	}
 
 	/**
 	 * @return string

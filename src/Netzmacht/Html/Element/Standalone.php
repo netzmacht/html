@@ -16,7 +16,7 @@ class Standalone extends Element
 		return sprintf(
 			'<%s %s>' . PHP_EOL,
 			$this->tag,
-			$this->attributes->generate()
+			$this->generateAttributes()
 		);
 	}
 

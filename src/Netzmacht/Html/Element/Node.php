@@ -145,7 +145,7 @@ class Node extends Element
 		return sprintf(
 			'<%s %s>%s</%s>' . PHP_EOL,
 			$this->tag,
-			$this->attributes->generate(),
+			$this->generateAttributes(),
 			$this->generateChildren(),
 			$this->tag
 		);
