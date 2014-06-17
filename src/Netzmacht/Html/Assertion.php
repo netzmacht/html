@@ -17,4 +17,5 @@ class Assertion extends \Assert\Assertion
 	 * @var string
 	 */
 	protected static $exceptionClass = 'Netzmacht\Html\Exception\InvalidArgumentException';
+
 } 
