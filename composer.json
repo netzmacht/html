@@ -18,7 +18,14 @@
         "source":"https://github.com/netzmacht/html"
     },
     "require":{
-        "php":">=5.3"
+        "php":">=5.3",
+        "beberlei/assert":"~2.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "dev-develop"
+    },
+    "config": {
+        "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": { "Netzmacht\\Html\\": "src/" }

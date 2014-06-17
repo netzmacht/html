@@ -21,7 +21,11 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	function __construct(array $attributes=array())
 	{
-		$this->attributes = array_merge(array('class' => array()), $attributes);
+		$attributes = array_merge(array('class' => array()), $attributes);
+
+		foreach($attributes as $name => $value) {
+			$this->setAttribute($name, $value);
+		}
 	}
 
 
@@ -32,6 +36,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function setAttribute($name, $value)
 	{
+		Assertion::regex($name, '@^([^\t\n\f \/>"\'=]+)$@', 'Invalid name given');
 		$this->attributes[$name] = $value;
 
 		return $this;
@@ -86,6 +91,15 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 		}
 
 		return $this;
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function toArray()
+	{
+		return $this->attributes;
 	}
 
 
@@ -188,14 +202,14 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 				case 'required':
 				case 'selected':
 					if($value) {
-						$buffer .= ' ' . $name;
+						$buffer .= ' ' . htmlspecialchars($name);
 					}
 
 					break;
 
 				case 'class':
 					if(!empty($value)) {
-						$value = array_map('specialchars', $value);
+						$value = array_map('htmlspecialchars', $value);
 						$value = implode(' ', $value);
 
 						$buffer .= sprintf($template, $name, $value);
@@ -205,7 +219,7 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 
 				default:
 					if(!is_array($value)) {
-						$buffer .= sprintf($template, $name, specialchars($value));
+						$buffer .= sprintf($template, $name, htmlspecialchars($value));
 					}
 
 					break;
