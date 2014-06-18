@@ -7,18 +7,17 @@ use Prophecy\Argument;
 
 class AttributesSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+	const EXCEPTION = 'Netzmacht\Html\Exception\InvalidArgumentException';
+
+	function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Html\Attributes');
-		$this->shouldHaveType('Netzmacht\Html\GenerateInterface');
-		$this->shouldHaveType('ArrayAccess');
-		$this->shouldHaveType('IteratorAggregate');
     }
 
 
 	function it_can_be_constructed_with_attributes()
 	{
-		$attributes = array('id' => 'my_id', 'class' => array('1', '2'));
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
 		$this->beConstructedWith($attributes);
 
 		$this->toArray()->shouldBeLike($attributes);
@@ -52,6 +51,7 @@ class AttributesSpec extends ObjectBehavior
 
 	function its_rendered_by___toString()
 	{
+		$this->shouldHaveType('Netzmacht\Html\GenerateInterface');
 		$this->__toString()->shouldReturn($this->generate());
 	}
 
@@ -71,7 +71,7 @@ class AttributesSpec extends ObjectBehavior
 	function it_throws_when_invalid_attribute_name_is_given()
 	{
 		$this
-			->shouldThrow('Netzmacht\Html\Exception\InvalidArgumentException')
+			->shouldThrow(self::EXCEPTION)
 			->during('setAttribute', array('test"', 'val'));
 	}
 
@@ -79,7 +79,7 @@ class AttributesSpec extends ObjectBehavior
 	function it_throws_when_constructed_with_invalid_attribute_name()
 	{
 		$this
-			->shouldThrow('Netzmacht\Html\Exception\InvalidArgumentException')
+			->shouldThrow(self::EXCEPTION)
 			->during('__construct', array(array('test"' => 'val')));
 	}
 	
@@ -125,5 +125,129 @@ class AttributesSpec extends ObjectBehavior
 		$this->beConstructedWith($attributes);
 
 		$this->generate()->shouldReturn(implode(' ', array_keys(array_filter($attributes))));
+	}
+
+
+	function it_iterates_through_attributes()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+		$this->beConstructedWith($attributes);
+
+		$this->shouldHaveType('IteratorAggregate');
+		$this->getIterator()->shouldBeAnInstanceOf('\Traversable');
+		$this->getIterator()->getArrayCopy()->shouldBeLike($attributes);
+	}
+
+
+	function it_adds_multiple_attributes()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+
+		$this->addAttributes($attributes)->shouldReturn($this);
+		$this->toArray()->shouldBeLike($attributes);
+	}
+
+	function it_removes_attribute()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+		$this->beConstructedWith($attributes);
+
+		$this->hasAttribute('id')->shouldBe(true);
+		$this->removeAttribute('id')->shouldReturn($this);
+		$this->hasAttribute('id')->shouldBe(false);
+	}
+
+	function it_stores_classes_as_array()
+	{
+		$this->getAttribute('class')->shouldBeArray();
+	}
+
+	function it_keeps_empty_attributes_array_when_removed()
+	{
+		$this->removeAttribute('class');
+		$this->getAttribute('class')->shouldBeArray();
+		$this->getAttribute('class')->shouldHaveCount(0);
+	}
+
+	function it_throws_when_class_is_a_string()
+	{
+		$this
+			->shouldThrow(static::EXCEPTION)
+			->during('setAttribute', array('class', 'foo'));
+	}
+
+	function it_adds_a_class()
+	{
+		$this->addClass('foo')->shouldReturn($this);
+		$this->getAttribute('class')->shouldBeLike(array('foo'));
+	}
+
+	function it_splits_multiple_classes()
+	{
+		$this->addClass('foo bar')->shouldReturn($this);
+		$this->getAttribute('class')->shouldBeLike(array('foo', 'bar'));
+	}
+
+	function it_excepts_a_valid_css_class()
+	{
+		$this->addClass('-moz-padding-foo');
+		$this->addClass('foo');
+		$this->addClass('_foo_bar');
+		$this->addClass('-_foo_bar');
+	}
+
+	function it_throws_if_invalid_css_class_given()
+	{
+		$this->shouldThrow(static::EXCEPTION)->during('addClass', array(':hide'));
+		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('-0a'));
+		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('9foo'));
+		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('--all'));
+		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('/match/'));
+	}
+
+	function it_removes_class()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+		$this->beConstructedWith($attributes);
+
+		$this->hasClass('a')->shouldBe(true);
+		$this->removeClass('a')->shouldReturn($this);
+		$this->hasClass('a')->shouldBe(false);
+	}
+
+	function it_gets_id()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+		$this->beConstructedWith($attributes);
+
+		$this->getId()->shouldBe('my_id');
+	}
+
+	function it_sets_id()
+	{
+		$this->setId('foo')->shouldReturn($this);
+		$this->getId()->shouldBe('foo');
+	}
+
+	function it_has_array_access()
+	{
+		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
+		$this->beConstructedWith($attributes);
+
+		$this->shouldHaveType('ArrayAccess');
+
+		$this['id']->shouldBe('my_id');
+		$this['id'] = 'foo';
+		$this['id']->shouldBe('foo');
+	}
+
+	function it_validates_array_access_value()
+	{
+		$this->shouldThrow(static::EXCEPTION)->during('offsetSet', array('class', ':hide'));
+	}
+
+	function it_validates_array_access_key()
+	{
+		$this->shouldThrow(static::EXCEPTION)->during('offsetSet', array('"class', 'hans'));
 	}
 }

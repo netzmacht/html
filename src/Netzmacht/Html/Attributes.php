@@ -2,6 +2,7 @@
 
 namespace Netzmacht\Html;
 
+use Netzmacht\Html\Exception\InvalidArgumentException;
 use Traversable;
 
 /**
@@ -21,7 +22,9 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	function __construct(array $attributes=array())
 	{
-		$attributes = array_merge(array('class' => array()), $attributes);
+		$this->attributes = array(
+			'class' => array(),
+		);
 
 		foreach($attributes as $name => $value) {
 			$this->setAttribute($name, $value);
@@ -33,11 +36,19 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 * @param $name
 	 * @param $value
 	 * @return $this
+	 * @throws InvalidArgumentException
 	 */
 	public function setAttribute($name, $value)
 	{
 		Assertion::regex($name, '@^([^\t\n\f \/>"\'=]+)$@', 'Invalid name given');
-		$this->attributes[$name] = $value;
+
+		if($name == 'class') {
+			Assertion::isArray($value, 'Classes have to be set as array');
+			$this->addClasses($value);
+		}
+		else {
+			$this->attributes[$name] = $value;
+		}
 
 		return $this;
 	}
@@ -74,7 +85,12 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function removeAttribute($name)
 	{
-		unset($this->attributes[$name]);
+		if($name == 'class') {
+			$this->attributes['class'] = array();
+		}
+		else {
+			unset($this->attributes[$name]);
+		}
 
 		return $this;
 	}
@@ -116,13 +132,27 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 
 
 	/**
-	 * @param $name
+	 * @param $class
 	 * @return $this
+	 * @throws InvalidArgumentException
 	 */
-	public function addClass($name)
+	public function addClass($class)
 	{
-		if(!$this->hasClass($name)) {
-			$this->attributes['class'][] = $name;
+		// split multiple classes
+		if(strpos($class, ' ') !== false) {
+			$classes = array_filter(explode(' ', $class));
+
+			foreach($classes as $class) {
+				$this->addClass($class);
+			}
+
+			return $this;
+		}
+
+		Assertion::regex($class, '/^\-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/', 'No valid css class given');
+
+		if(!$this->hasClass($class)) {
+			$this->attributes['class'][] = $class;
 		}
 
 		return $this;
@@ -132,9 +162,14 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	/**
 	 * @param $value
 	 * @return $this
+	 * @throws InvalidArgumentException
 	 */
 	public function setId($value)
 	{
+		Assertion::nullOrString($value, 'Css ID has to be a string');
+		Assertion::nullOrMinLength($value, 1, 'Css ID requires at least one character');
+		Assertion::nullOrRegex($value, '/^[^\s]*$/s', 'Css ID cannot contain a space character');
+
 		$this->setAttribute('id', $value);
 
 		return $this;
@@ -156,10 +191,24 @@ class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
 	 */
 	public function removeClass($name)
 	{
-		if($this->hasClass($name)) {
-			$index = array_search($name, $this->attributes['class']);
+		$index = array_search($name, $this->attributes['class']);
+
+		if($index !== false) {
 			unset($this->attributes['class'][$index]);
 			$this->attributes['class'] = array_values($this->attributes['class']);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param array $classes
+	 * @return $this
+	 */
+	public function addClasses(array $classes)
+	{
+		foreach($classes as $class) {
+			$this->addClass($class);
 		}
 
 		return $this;
