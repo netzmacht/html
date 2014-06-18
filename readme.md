@@ -30,7 +30,7 @@ $attributes
 
 This library uses the magic `__toString` to converts the helper objects to string. Outputting is really simple now:
 
-```html
+```php
 
 <div <?= $attributes; ?>><span class="label">Label</span> This is a paragraph.</div>
 
@@ -38,7 +38,7 @@ This library uses the magic `__toString` to converts the helper objects to strin
 
 Of course you can change the attributes before generating
 
-```html
+```php
 
 <div <?= $attributes->setId('second')->removeClass('a_class')->addClass('new_class'); ?>>the content</div>
 
@@ -68,7 +68,7 @@ $paragraph
 
 Now you can output the whole element:
 
-```html
+```php
 
 <article>
     <?= $paragraph; ?>
