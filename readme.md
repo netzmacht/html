@@ -121,6 +121,6 @@ class MySubscriber
 }
 
 $subscriber = new MySubscriber(new Netzmacht\Html\Factory\SimpleFactory());
-$symfonyEventDispatcher->addListener(Netzmacht\Html\Event\Events::CREATE_ELEMENT, $subscriber);
+$symfonyEventDispatcher->addListener(Netzmacht\Html\Event\Events::CREATE_ELEMENT, array($subscriber, 'handle'));
 
 ```
