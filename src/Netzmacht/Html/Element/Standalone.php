@@ -5,6 +5,11 @@ namespace Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
 
+/**
+ * Standalone elements does not have an closing tag
+ *
+ * @package Netzmacht\Html\Element
+ */
 class Standalone extends Element
 {
 
@@ -20,4 +25,4 @@ class Standalone extends Element
 		);
 	}
 
-} 
+}

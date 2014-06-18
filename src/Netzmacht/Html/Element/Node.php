@@ -5,6 +5,11 @@ namespace Netzmacht\Html\Element;
 use Netzmacht\Html\CastsToString;
 use Netzmacht\Html\Element;
 
+/**
+ * A Node can contain children
+ *
+ * @package Netzmacht\Html\Element
+ */
 class Node extends Element
 {
 	const POSITION_FIRST = 'first';
@@ -24,7 +29,7 @@ class Node extends Element
 	public function addChild($child, $position=Node::POSITION_LAST)
 	{
 		if(is_int($position)) {
-			array_insert($this->children, $position, array($child));
+			array_splice($this->children, $position, 0, $child);
 		}
 		elseif($position == static::POSITION_FIRST) {
 			array_unshift($this->children, $child);

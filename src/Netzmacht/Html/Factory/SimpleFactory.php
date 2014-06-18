@@ -45,7 +45,7 @@ class SimpleFactory implements Factory
 	/**
 	 * @param array $standalone
 	 */
-	public static function setStandalone($standalone)
+	public static function setStandalone(array $standalone)
 	{
 		self::$standalone = $standalone;
 	}
