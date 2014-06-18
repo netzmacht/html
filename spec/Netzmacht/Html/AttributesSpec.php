@@ -51,7 +51,7 @@ class AttributesSpec extends ObjectBehavior
 
 	function its_rendered_by___toString()
 	{
-		$this->shouldHaveType('Netzmacht\Html\GenerateInterface');
+		$this->shouldHaveType('Netzmacht\Html\CastsToString');
 		$this->__toString()->shouldReturn($this->generate());
 	}
 
