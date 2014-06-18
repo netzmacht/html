@@ -2,6 +2,7 @@
 
 namespace Netzmacht\Html\Factory;
 
+use Netzmacht\Html\Factory;
 use Netzmacht\Html\Event\CreateElementEvent;
 use Netzmacht\Html\Event\Events;
 use Netzmacht\Html\Exception\RuntimeException;

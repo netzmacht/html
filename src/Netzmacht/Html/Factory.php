@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacht\Html\Factory;
+namespace Netzmacht\Html;
 
 use Netzmacht\Html\Element;
 

@@ -2,6 +2,7 @@
 
 namespace Netzmacht\Html\Factory;
 
+use Netzmacht\Html\Factory;
 use Netzmacht\Html\Element;
 
 class SimpleFactory implements Factory

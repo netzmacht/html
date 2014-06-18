@@ -4,7 +4,7 @@ namespace Netzmacht\Html;
 
 use Netzmacht\Html\Element\Node;
 use Netzmacht\Html\Element\Standalone;
-use Netzmacht\Html\Factory\Factory;
+use Netzmacht\Html\Factory;
 use Netzmacht\Html\Factory\SimpleFactory;
 
 
@@ -15,7 +15,7 @@ use Netzmacht\Html\Factory\SimpleFactory;
 abstract class Element extends Attributes implements CastsToString
 {
 	/**
-	 * @var Factory
+	 * @var \Netzmacht\Factory\Factory
 	 */
 	protected static $factory;
 
@@ -86,7 +86,7 @@ abstract class Element extends Attributes implements CastsToString
 
 
 	/**
-	 * @param \Netzmacht\Html\Factory\Factory $factory
+	 * @param \Netzmacht\Html\Factory $factory
 	 */
 	public static function setFactory(Factory $factory)
 	{
@@ -95,7 +95,7 @@ abstract class Element extends Attributes implements CastsToString
 
 
 	/**
-	 * @return \Netzmacht\Html\Factory\Factory
+	 * @return \Netzmacht\Html\Factory
 	 */
 	public static function getFactory()
 	{
