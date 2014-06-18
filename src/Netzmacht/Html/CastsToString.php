@@ -6,7 +6,7 @@ namespace Netzmacht\Html;
  * Class GenerateableInterface
  * @package Netzmacht\Html
  */
-interface GenerateInterface
+interface CastsToString
 {
 
 	/**

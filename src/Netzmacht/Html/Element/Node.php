@@ -2,7 +2,7 @@
 
 namespace Netzmacht\Html\Element;
 
-use Netzmacht\Html\GenerateInterface;
+use Netzmacht\Html\CastsToString;
 use Netzmacht\Html\Element;
 
 class Node extends Element
@@ -113,7 +113,7 @@ class Node extends Element
 			if(is_string($child)) {
 				$buffer .= $child;
 			}
-			elseif(is_object($child) && $child instanceof GenerateInterface) {
+			elseif(is_object($child) && $child instanceof CastsToString) {
 				$buffer .= $child->generate();
 			}
 			else {

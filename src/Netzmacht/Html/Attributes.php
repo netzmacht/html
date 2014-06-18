@@ -9,7 +9,7 @@ use Traversable;
  * Class Attributes
  * @package Netzmacht\FormHelper\Html
  */
-class Attributes implements GenerateInterface, \IteratorAggregate, \ArrayAccess
+class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 {
 	/**
 	 * @var array

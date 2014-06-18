@@ -12,7 +12,7 @@ use Netzmacht\Html\Factory\SimpleFactory;
  * Class Node
  * @package Netzmacht\FormHelper\Html
  */
-abstract class Element extends Attributes implements GenerateInterface
+abstract class Element extends Attributes implements CastsToString
 {
 	/**
 	 * @var FactoryInterface
