@@ -6,7 +6,7 @@ use Netzmacht\Html\Event\CreateElementEvent;
 use Netzmacht\Html\Event\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EventBasedFactory
+class EventBasedFactory implements Factory
 {
 
 	/**
@@ -25,14 +25,20 @@ class EventBasedFactory
 
 
 	/**
-	 * @param $tag
+	 * @param string $tag
 	 * @param array $attributes
+	 * @throws \RuntimeException
 	 * @return \Netzmacht\Html\Element
 	 */
 	public function createElement($tag, array $attributes=array())
 	{
 		$event = new CreateElementEvent($tag, $attributes);
 		$this->eventDispatcher->dispatch(Events::CREATE_ELEMENT, $event);
+		$element = $event->getElement();
+
+		if(!$element) {
+			throw new \RuntimeException('No element created by dispatcher');
+		}
 
 		return $event->getElement();
 	}

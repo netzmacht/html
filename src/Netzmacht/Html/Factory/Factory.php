@@ -8,7 +8,7 @@ use Netzmacht\Html\Element;
  * Interface FactoryInterface
  * @package Netzmacht\Html\Factory
  */
-interface FactoryInterface
+interface Factory
 {
 
 	/**
