@@ -9,6 +9,9 @@ php:
   - 5.5
   - hhvm
 
-before_script:
+install:
   - composer self-update
-  - composer update
+  - composer install --dev
+
+script:
+  - ./bin/phpspec run
