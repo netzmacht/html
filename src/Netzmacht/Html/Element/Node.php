@@ -161,18 +161,7 @@ class Node extends Element
 		$buffer = '';
 
 		foreach($this->children as $child) {
-			if(is_string($child)) {
-				$buffer .= $child;
-			}
-			elseif(is_object($child) && $child instanceof CastsToString) {
-				$buffer .= $child->generate();
-			}
-			else {
-				try {
-					$buffer .= (string) $child;
-				}
-				catch(\Exception $e) {}
-			}
+			$buffer .= (string) $child;
 		}
 
 		return $buffer;
