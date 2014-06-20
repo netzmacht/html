@@ -20,7 +20,7 @@ class AttributesSpec extends ObjectBehavior
 		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
 		$this->beConstructedWith($attributes);
 
-		$this->toArray()->shouldBeLike($attributes);
+		$this->getAttributes()->shouldBeLike($attributes);
 	}
 
 	/**
@@ -144,7 +144,7 @@ class AttributesSpec extends ObjectBehavior
 		$attributes = array('id' => 'my_id', 'class' => array('a', 'b'));
 
 		$this->addAttributes($attributes)->shouldReturn($this);
-		$this->toArray()->shouldBeLike($attributes);
+		$this->getAttributes()->shouldBeLike($attributes);
 	}
 
 	function it_removes_attribute()

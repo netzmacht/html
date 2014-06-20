@@ -86,6 +86,7 @@ abstract class Element extends Attributes implements CastsToString
 		return parent::generate();
 	}
 
+
 	/**
 	 * @return string
 	 */

@@ -1,6 +1,8 @@
 HTML helper library
 ===================
 
+![Build status](https://travis-ci.org/netzmacht/html.svg)
+
 This library is made as a helper library creating HTML output.
 
 Install
@@ -93,7 +95,7 @@ Netzmacht\Html\Element::setFactory($factory);
 ```
 
 If you use the event based factory you have to take care of building the elements for yourself. You have to assign your
-event handler to the dispatcher by listening to the `Netzmacht\Html\Event\Events::CREATE_ELEMENT` which passes a
+event handler to the dispatcher by listening to the `Netzmacht\Html\Event\CreateElementEvent::NAME` which passes a
 `Netzmacht\Html\Event\CreateElementEvent` event object.
 
 ```php

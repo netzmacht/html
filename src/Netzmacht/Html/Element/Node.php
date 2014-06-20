@@ -38,7 +38,7 @@ class Node extends Element
 	public function addChild($child, $position=Node::POSITION_LAST)
 	{
 		if(is_int($position)) {
-			array_splice($this->children, $position, 0, $child);
+			array_splice($this->children, $position, 0, array($child));
 		}
 		elseif($position == static::POSITION_FIRST) {
 			array_unshift($this->children, $child);
@@ -119,7 +119,31 @@ class Node extends Element
 	/**
 	 * @return string
 	 */
-	public function generateChildren()
+	public function getContent()
+	{
+		return $this->generateChildren();
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function generate()
+	{
+		return sprintf(
+			'<%s %s>%s</%s>' . PHP_EOL,
+			$this->tag,
+			$this->generateAttributes(),
+			$this->generateChildren(),
+			$this->tag
+		);
+	}
+
+
+	/**
+	 * @return string
+	 */
+	private function generateChildren()
 	{
 		$buffer = '';
 
@@ -139,30 +163,6 @@ class Node extends Element
 		}
 
 		return $buffer;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getContent()
-	{
-		return $this->generateChildren();
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function generate()
-	{
-		return sprintf(
-			'<%s %s>%s</%s>' . PHP_EOL,
-			$this->tag,
-			$this->generateAttributes(),
-			$this->generateChildren(),
-			$this->tag
-		);
 	}
 
 }

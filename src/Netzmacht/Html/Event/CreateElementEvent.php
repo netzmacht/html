@@ -11,11 +11,12 @@
 
 namespace Netzmacht\Html\Event;
 
-use Netzmacht\FormHelper\Html\Element;
+use Netzmacht\Html\Element;
 use Symfony\Component\EventDispatcher\Event;
 
 class CreateElementEvent extends Event
 {
+	const NAME = 'netzmacht.html.create-element';
 
 	/**
 	 * @var string
@@ -63,7 +64,7 @@ class CreateElementEvent extends Event
 
 
 	/**
-	 * @param \Netzmacht\FormHelper\Html\Element $element
+	 * @param \Netzmacht\Html\Element $element
 	 */
 	public function setElement(Element $element)
 	{
@@ -72,7 +73,7 @@ class CreateElementEvent extends Event
 
 
 	/**
-	 * @return \Netzmacht\FormHelper\Html\Element
+	 * @return \Netzmacht\Html\Element
 	 */
 	public function getElement()
 	{

@@ -122,7 +122,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 	/**
 	 * @return array
 	 */
-	public function toArray()
+	public function getAttributes()
 	{
 		return $this->attributes;
 	}
