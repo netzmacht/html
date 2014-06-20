@@ -22,7 +22,8 @@
         "beberlei/assert":"~2.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "dev-develop"
+        "phpspec/phpspec": "dev-develop",
+        "henrikbjorn/phpspec-code-coverage" : "~0.1.0"
     },
     "extra": {
         "branch-alias": {
