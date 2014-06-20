@@ -1,7 +1,7 @@
 HTML helper library
 ===================
 
-![Build status](https://travis-ci.org/netzmacht/html.svg)
+[![Build Status](https://travis-ci.org/netzmacht/html.svg?branch=master)](https://travis-ci.org/netzmacht/html)
 
 This library is made as a helper library creating HTML output.
 
