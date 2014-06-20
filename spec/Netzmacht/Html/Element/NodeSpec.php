@@ -122,6 +122,15 @@ class NodeSpec extends ObjectBehavior
 		$this->getChildren()->shouldReturn(array());
 	}
 
+	function it_removes_all_children(Node $a)
+	{
+		$this->addChild($a);
+		$this->getChildren()->shouldReturn(array($a));
+
+		$this->removeChildren()->shouldReturn($this);
+		$this->getChildren()->shouldReturn(array());
+	}
+
 	function it_renders_content(Node $a)
 	{
 		$content = '<a href="#test">Test</a>';

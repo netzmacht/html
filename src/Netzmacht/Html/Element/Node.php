@@ -83,6 +83,19 @@ class Node extends Element
 
 
 	/**
+	 * Remove all children
+	 *
+	 * @return $this
+	 */
+	public function removeChildren()
+	{
+		$this->children = array();
+
+		return $this;
+	}
+
+
+	/**
 	 * @param $child
 	 * @return int|false
 	 */
