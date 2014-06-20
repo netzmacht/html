@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @package    netzmacht/html
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2014 netzmacht creative David Molineus
+ * @license    LGPL 3.0
+ * @filesource
+ *
+ */
+
 namespace Netzmacht\Html;
 
 use Netzmacht\Html\Element\Node;
@@ -15,7 +24,7 @@ use Netzmacht\Html\Factory\SimpleFactory;
 abstract class Element extends Attributes implements CastsToString
 {
 	/**
-	 * @var \Netzmacht\Factory\Factory
+	 * @var \Netzmacht\Html\Factory
 	 */
 	protected static $factory;
 
@@ -23,6 +32,7 @@ abstract class Element extends Attributes implements CastsToString
 	 * @var string
 	 */
 	protected $tag;
+
 
 	/**
 	 * @param string $tag
