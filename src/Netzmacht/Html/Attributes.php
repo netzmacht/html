@@ -25,6 +25,24 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 	 */
 	protected $attributes;
 
+	/**
+	 * @var array
+	 */
+	private static $booleanAttributes = array(
+		'compact',
+		'declare',
+		'defer',
+		'disabled',
+		'formnovalidate',
+		'multiple',
+		'nowrap',
+		'novalidate',
+		'ismap',
+		'readonly',
+		'required',
+		'selected',
+	);
+
 
 	/**
 	 * @param array $attributes
@@ -246,41 +264,22 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 		$template = ' %s="%s"';
 
 		foreach($this->attributes as $name => $value) {
-			switch($name) {
-				case 'compact':
-				case 'declare':
-				case 'defer':
-				case 'disabled':
-				case 'formnovalidate':
-				case 'multiple':
-				case 'nowrap':
-				case 'novalidate':
-				case 'ismap':
-				case 'readonly':
-				case 'required':
-				case 'selected':
-					if($value) {
-						$buffer .= ' ' . htmlspecialchars($name);
-					}
+			if(in_array($name, static::$booleanAttributes)) {
+				if($value) {
+					$buffer .= ' ' . htmlspecialchars($name);
+				}
 
-					break;
+			}
+			elseif($name == 'class') {
+				if(!empty($value)) {
+					$value = array_map('htmlspecialchars', $value);
+					$value = implode(' ', $value);
 
-				case 'class':
-					if(!empty($value)) {
-						$value = array_map('htmlspecialchars', $value);
-						$value = implode(' ', $value);
-
-						$buffer .= sprintf($template, $name, $value);
-					}
-
-					break;
-
-				default:
-					if(!is_array($value)) {
-						$buffer .= sprintf($template, $name, htmlspecialchars($value));
-					}
-
-					break;
+					$buffer .= sprintf($template, $name, $value);
+				}
+			}
+			else {
+				$buffer .= sprintf($template, $name, htmlspecialchars((string) $value));
 			}
 		}
 
