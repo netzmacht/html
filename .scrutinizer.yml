@@ -1,2 +1,17 @@
-filter:
-    excluded_paths: [spec/*]
+tools:
+    php_sim:
+        enabled: true
+        filter:
+            paths: ["src/*"]
+    php_mess_detector:
+        enabled: true
+        filter:
+            paths: ["src/*"]
+    php_pdepend:
+        enabled: true
+        filter:
+            paths: ["src/*"]
+    php_analyzer:
+        enabled: true
+        filter:
+            paths: ["src/*"]
