@@ -3,7 +3,6 @@
 namespace spec\Netzmacht\Html;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class AttributesSpec extends ObjectBehavior
 {

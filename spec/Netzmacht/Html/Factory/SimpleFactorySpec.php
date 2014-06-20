@@ -5,7 +5,6 @@ namespace spec\Netzmacht\Html\Factory;
 use Netzmacht\Html\Element;
 use Netzmacht\Html\Factory\SimpleFactory;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class SimpleFactorySpec extends ObjectBehavior
 {

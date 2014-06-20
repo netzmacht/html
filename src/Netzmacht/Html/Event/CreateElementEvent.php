@@ -35,7 +35,7 @@ class CreateElementEvent extends Event
 
 
 	/**
-	 * @param $tag
+	 * @param string $tag
 	 * @param array $attributes
 	 */
 	function __construct($tag, array $attributes=array())
