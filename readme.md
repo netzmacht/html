@@ -2,6 +2,7 @@ HTML helper library
 ===================
 
 [![Build Status](https://travis-ci.org/netzmacht/html.svg?branch=master)](https://travis-ci.org/netzmacht/html)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/netzmacht/html/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/netzmacht/html/?branch=master)
 
 This library is made as a helper library creating HTML output.
 
