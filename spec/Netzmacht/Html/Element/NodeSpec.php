@@ -135,6 +135,7 @@ class NodeSpec extends ObjectBehavior
 	{
 		$content = '<a href="#test">Test</a>';
 		$a->generate()->willReturn($content);
+		$a->__toString()->willReturn($content);
 
 		$this->getContent()->shouldBe('');
 
@@ -146,6 +147,7 @@ class NodeSpec extends ObjectBehavior
 	{
 		$content = '<a href="#test">Test</a>';
 		$a->generate()->willReturn($content);
+		$a->__toString()->willReturn($content);
 
 		$this->addChild($a);
 		$this->generate()->shouldReturn('<p class="example" id="test">' . $content . '</p>' . PHP_EOL);

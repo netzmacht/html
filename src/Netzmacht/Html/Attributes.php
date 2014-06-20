@@ -264,7 +264,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 		$template = ' %s="%s"';
 
 		foreach($this->attributes as $name => $value) {
-			if(in_array($name, static::$booleanAttributes)) {
+			if(in_array($name, self::$booleanAttributes)) {
 				if($value) {
 					$buffer .= ' ' . htmlspecialchars($name);
 				}
