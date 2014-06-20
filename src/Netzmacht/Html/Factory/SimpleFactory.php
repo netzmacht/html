@@ -53,7 +53,7 @@ class SimpleFactory implements Factory
 
 
 	/**
-	 * @param array $standalone
+	 * @param string[] $standalone
 	 */
 	public static function setStandalone(array $standalone)
 	{
