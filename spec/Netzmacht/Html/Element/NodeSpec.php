@@ -26,12 +26,15 @@ class NodeSpec extends ObjectBehavior
 		$this->shouldHaveType('Netzmacht\Html\Attributes');
 	}
 
+	function it_generates_attribute()
+	{
+		$this->generateAttributes()->shouldReturn('class="example" id="test"');
+	}
 
 	function it_creates_new_element()
 	{
 		$this->create('p')->shouldHaveType('Netzmacht\Html\Element');
 	}
-
 
 	function it_casts_to_string()
 	{

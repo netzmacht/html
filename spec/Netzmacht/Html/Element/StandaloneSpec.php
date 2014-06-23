@@ -29,6 +29,11 @@ class StandaloneSpec extends ObjectBehavior
 		$this->shouldHaveType('Netzmacht\Html\Attributes');
 	}
 
+	function it_generates_attribute()
+	{
+		$this->generateAttributes()->shouldReturn('class="example" src="file.png"');
+	}
+
 
 	function it_has_a_tag()
 	{
