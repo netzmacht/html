@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Html\Element;
 
-use Netzmacht\Html\CastsToString;
 use Netzmacht\Html\Element;
 
 /**
@@ -32,7 +31,7 @@ class Node extends Element
 
 	/**
 	 * @param Element|string $child
-	 * @param $position
+	 * @param string $position
 	 * @return $this
 	 */
 	public function addChild($child, $position=Node::POSITION_LAST)
