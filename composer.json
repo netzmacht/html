@@ -18,8 +18,7 @@
         "source":"https://github.com/netzmacht/html"
     },
     "require":{
-        "php":">=5.3",
-        "beberlei/assert":"~2.0"
+        "php":">=5.3"
     },
     "require-dev": {
         "phpspec/phpspec": "dev-develop",

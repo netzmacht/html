@@ -67,10 +67,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 	 */
 	public function setAttribute($name, $value)
 	{
-		Assertion::regex($name, '@^([^\t\n\f \/>"\'=]+)$@', 'Invalid name given');
+		$this->guardValidName($name);
 
 		if($name == 'class') {
-			Assertion::isArray($value, 'Classes have to be set as array');
+			$this->guardIsArray($value, 'Classes have to be set as array');
 			$this->addClasses($value);
 		}
 		else {
@@ -176,7 +176,8 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 			return $this;
 		}
 
-		Assertion::regex($class, '/^\-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/', 'No valid css class given');
+		$this->guardValidCssClass($class);
+
 
 		if(!$this->hasClass($class)) {
 			$this->attributes['class'][] = $class;
@@ -193,10 +194,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 	 */
 	public function setId($value)
 	{
-		Assertion::nullOrString($value, 'Css ID has to be a string');
-		Assertion::nullOrMinLength($value, 1, 'Css ID requires at least one character');
-		Assertion::nullOrRegex($value, '/^[^\s]*$/s', 'Css ID cannot contain a space character');
-
+		$this->guardValidId($value);
 		$this->setAttribute('id', $value);
 
 		return $this;
@@ -359,6 +357,63 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 	public function __toString()
 	{
 		return $this->generate();
+	}
+
+	/**
+	 * @param $name
+	 * @throws Exception\InvalidArgumentException
+	 */
+	private function guardValidName($name)
+	{
+		if(!preg_match('@^([^\t\n\f \/>"\'=]+)$@', $name)) {
+			throw new InvalidArgumentException('Invalid attribute name given', 0, null, $name);
+		}
+	}
+
+	/**
+	 * @param $value
+	 * @param string $error
+	 * @throws Exception\InvalidArgumentException
+	 */
+	private function guardIsArray($value, $error='Value has to be an array')
+	{
+		if(!is_array($value)) {
+			throw new InvalidArgumentException($error, 0, null, $value);
+		}
+	}
+
+	/**
+	 * @param $value
+	 * @throws Exception\InvalidArgumentException
+	 */
+	private function guardValidId($value)
+	{
+		if($value === null) {
+			return;
+		}
+
+		if(!is_string($value)) {
+			throw new InvalidArgumentException('Css ID has to be a string.', 0, null, $value);
+		}
+
+		if(strlen($value) < 1) {
+			throw new InvalidArgumentException('Css ID requires at least one character.', 0, null, $value);
+		}
+
+		if(!preg_match('/^[^\s]*$/s', $value)) {
+			throw new InvalidArgumentException('Css ID cannot contain a space character.', 0, null, $value);
+		}
+	}
+
+	/**
+	 * @param $class
+	 * @throws Exception\InvalidArgumentException
+	 */
+	private function guardValidCssClass($class)
+	{
+		if(!preg_match('/^\-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/', $class)) {
+			throw new InvalidArgumentException('Invalid css class given.', 0, null, $class);
+		}
 	}
 
 }
