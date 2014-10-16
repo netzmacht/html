@@ -187,7 +187,7 @@ class AttributesSpec extends ObjectBehavior
 		$this->getAttribute('class')->shouldBeLike(array('foo', 'bar'));
 	}
 
-	function it_excepts_a_valid_css_class()
+	function it_accepts_a_valid_css_class()
 	{
 		$this->addClass('-moz-padding-foo');
 		$this->addClass('foo');
@@ -195,14 +195,13 @@ class AttributesSpec extends ObjectBehavior
 		$this->addClass('-_foo_bar');
 	}
 
-	function it_throws_if_invalid_css_class_given()
-	{
-		$this->shouldThrow(static::EXCEPTION)->during('addClass', array(':hide'));
-		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('-0a'));
-		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('9foo'));
-		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('--all'));
-		$this->shouldThrow(static::EXCEPTION)->during('addClass', array('/match/'));
-	}
+	function it_ignores_empty_css_class()
+    {
+        $this->addClass('test');
+        $this->getAttribute('class')->shouldReturn(array('test'));
+        $this->addClass('');
+        $this->getAttribute('class')->shouldReturn(array('test'));
+    }
 
 	function it_removes_class()
 	{

@@ -176,10 +176,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 			return $this;
 		}
 
-		$this->guardValidCssClass($class);
-
-
-		if(!$this->hasClass($class)) {
+		if($class && !$this->hasClass($class)) {
 			$this->attributes['class'][] = $class;
 		}
 
@@ -402,17 +399,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 
 		if(!preg_match('/^[^\s]*$/s', $value)) {
 			throw new InvalidArgumentException('Css ID cannot contain a space character.', 0, null, $value);
-		}
-	}
-
-	/**
-	 * @param $class
-	 * @throws Exception\InvalidArgumentException
-	 */
-	private function guardValidCssClass($class)
-	{
-		if(!preg_match('/^\-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/', $class)) {
-			throw new InvalidArgumentException('Invalid css class given.', 0, null, $class);
 		}
 	}
 
