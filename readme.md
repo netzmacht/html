@@ -5,7 +5,7 @@ HTML helper library
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/netzmacht/html/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/netzmacht/html/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/netzmacht/html/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/netzmacht/html/?branch=master)
 
-This library is made as a helper library creating HTML output.
+This library can be used as a helper library for creating HTML output.
 
 Install
 --------------
@@ -32,7 +32,7 @@ $attributes
 
 ```
 
-This library uses the magic `__toString` to converts the helper objects to string. Outputting is really simple now:
+This library uses the magic `__toString` to convert the helper objects to string. Outputting is really simple now:
 
 ```php
 
@@ -40,7 +40,7 @@ This library uses the magic `__toString` to converts the helper objects to strin
 
 ```
 
-Of course you can change the attributes before generating
+One can obviously change the attributes before generating
 
 ```php
 
@@ -51,8 +51,8 @@ Of course you can change the attributes before generating
 
 ### Elements
 
-Of course you can create the whole element as well. The library knows about *standalone* html elements which can't
-have any children and *nodes* which have children. Notice that the css classes are passed as array.
+One can create the whole element as well. The library knows about *standalone* html elements which can't
+have any children and *nodes* which have children. [Notice that the css classes are passed as array.]
 
 ```php
 
@@ -70,7 +70,7 @@ $paragraph
 
 ```
 
-Now you can output the whole element:
+Now one can output the whole element:
 
 ```php
 
@@ -83,11 +83,11 @@ Now you can output the whole element:
 Custom factory
 ==============
 
-By default this library works with a simple factory which can decides between standalone and node elements. If you
-want to support own components you can use another factory. You can implement your own by implementing
+By default this library works with a simple factory which can decide between standalone and node elements. If one
+wants to support own components he/she can use another factory. He/She can implement their own by implementing
 the `Netzmacht\Html\Factory` interface.
 
-Or you can use the `EventBasedFactory` which uses the symfony event dispatcher for creating an element.
+Or can use the `EventBasedFactory` which uses the symfony event dispatcher for creating an element.
 
 ```php
 
@@ -96,7 +96,7 @@ Netzmacht\Html\Element::setFactory($factory);
 
 ```
 
-If you use the event based factory you have to take care of building the elements for yourself. You have to assign your
+If one uses the event based factory, he/she has to take care of building the elements for themselves. He/She have to assign their 
 event handler to the dispatcher by listening to the `Netzmacht\Html\Event\CreateElementEvent::NAME` which passes a
 `Netzmacht\Html\Event\CreateElementEvent` event object.
 
