@@ -38,6 +38,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 		'nowrap',
 		'novalidate',
 		'ismap',
+		'itemscope',
 		'readonly',
 		'required',
 		'selected',
