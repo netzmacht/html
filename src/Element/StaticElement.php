@@ -20,23 +20,23 @@ use Netzmacht\Html\Element;
  *
  * @package Netzmacht\Html\Element
  */
-class StaticHtml implements Element
+class StaticElement implements Element
 {
     /**
-     * Html content.
+     * Element content.
      *
      * @var string
      */
-    private $html;
+    private $content;
 
     /**
      * Construct.
      *
-     * @param string $html Html content.
+     * @param string $content Element content.
      */
-    public function __construct(string $html)
+    public function __construct(string $content)
     {
-        $this->html = $html;
+        $this->content = $content;
     }
 
     /**
@@ -44,7 +44,7 @@ class StaticHtml implements Element
      */
     public function generate(): string
     {
-        return $this->html;
+        return $this->content;
     }
 
     /**

@@ -12,11 +12,11 @@
 namespace spec\Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
-use Netzmacht\Html\Element\StaticHtml;
+use Netzmacht\Html\Element\StaticElement;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class StaticHtmlSpec extends ObjectBehavior
+class StaticElementSpec extends ObjectBehavior
 {
     const HTML = '<b>Test</b>';
 
@@ -27,7 +27,7 @@ class StaticHtmlSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(StaticHtml::class);
+        $this->shouldHaveType(StaticElement::class);
     }
 
     function it_casts_to_string()
