@@ -14,70 +14,85 @@ namespace Netzmacht\Html\Event;
 use Netzmacht\Html\Element;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class CreateElementEvent
+ *
+ * @package Netzmacht\Html\Event
+ */
 class CreateElementEvent extends Event
 {
-	const NAME = 'netzmacht.html.create-element';
+    const NAME = 'netzmacht.html.create-element';
 
-	/**
-	 * @var string
-	 */
-	protected $tag;
+    /**
+     * Tag name.
+     *
+     * @var string
+     */
+    protected $tag;
 
-	/**
-	 * @var array
-	 */
-	protected $attributes = array();
+    /**
+     * Attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [];
 
-	/**
-	 * @var Element
-	 */
-	protected $element;
+    /**
+     * Created element.
+     *
+     * @var Element
+     */
+    protected $element;
 
+    /**
+     * Construct.
+     *
+     * @param string $tag        Tag name.
+     * @param array  $attributes List of attributes.
+     */
+    public function __construct($tag, array $attributes = [])
+    {
+        $this->tag        = $tag;
+        $this->attributes = $attributes;
+    }
 
-	/**
-	 * @param string $tag
-	 * @param array $attributes
-	 */
-	function __construct($tag, array $attributes=array())
-	{
-		$this->tag        = $tag;
-		$this->attributes = $attributes;
-	}
+    /**
+     * Get all attributes.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 
+    /**
+     * Get the tag.
+     *
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getAttributes()
-	{
-		return $this->attributes;
-	}
+    /**
+     * Set the element.
+     *
+     * @param \Netzmacht\Html\Element $element
+     */
+    public function setElement(Element $element)
+    {
+        $this->element = $element;
+    }
 
-
-	/**
-	 * @return string
-	 */
-	public function getTag()
-	{
-		return $this->tag;
-	}
-
-
-	/**
-	 * @param \Netzmacht\Html\Element $element
-	 */
-	public function setElement(Element $element)
-	{
-		$this->element = $element;
-	}
-
-
-	/**
-	 * @return \Netzmacht\Html\Element
-	 */
-	public function getElement()
-	{
-		return $this->element;
-	}
-
-} 
+    /**
+     * Get the element.
+     *
+     * @return \Netzmacht\Html\Element
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
+}

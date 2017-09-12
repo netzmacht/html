@@ -11,8 +11,11 @@
 
 namespace Netzmacht\Html\Exception;
 
-
+/**
+ * Class RuntimeException.
+ *
+ * @package Netzmacht\Html\Exception
+ */
 class RuntimeException extends \RuntimeException
 {
-
-} 
+}

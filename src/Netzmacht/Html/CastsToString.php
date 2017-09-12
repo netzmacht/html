@@ -12,23 +12,23 @@
 namespace Netzmacht\Html;
 
 /**
- * Class GenerateableInterface
+ * Class CastsToString.
+ *
  * @package Netzmacht\Html
  */
 interface CastsToString
 {
+    /**
+     * Generates the element.
+     *
+     * @return string
+     */
+    public function generate();
 
-	/**
-	 * Generates the element
-	 *
-	 * @return string
-	 */
-	public function generate();
-
-
-	/**
-	 * @return string
-	 */
-	public function __toString();
-
+    /**
+     * Cast to string method.
+     *
+     * @return string
+     */
+    public function __toString();
 }

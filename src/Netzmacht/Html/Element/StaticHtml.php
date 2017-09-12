@@ -11,62 +11,69 @@
 
 namespace Netzmacht\Html\Element;
 
-
 use Netzmacht\Html\CastsToString;
 
+/**
+ * Class StaticHtml.
+ *
+ * @package Netzmacht\Html\Element
+ */
 class StaticHtml implements CastsToString
 {
-	/**
-	 * @var string
-	 */
-	private $html;
+    /**
+     * Html content.
+     *
+     * @var string
+     */
+    private $html;
 
-	/**
-	 * @param $html
-	 */
-	function __construct($html)
-	{
-		$this->html = $html;
-	}
+    /**
+     * Construct.
+     *
+     * @param string $html Html content.
+     */
+    public function __construct($html)
+    {
+        $this->html = $html;
+    }
 
+    /**
+     * Set the html content.
+     *
+     * @param string $html Html content.
+     *
+     * @return $this
+     */
+    public function setHtml($html)
+    {
+        $this->html = $html;
 
-	/**
-	 * @param string $html
-	 * @return $this
-	 */
-	public function setHtml($html)
-	{
-		$this->html = $html;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get the html content.
+     *
+     * @return string
+     */
+    public function getHtml()
+    {
+        return $this->html;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generate()
+    {
+        return $this->getHtml();
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getHtml()
-	{
-		return $this->html;
-	}
-
-
-	/**
-	 * Generates the element
-	 *
-	 * @return string
-	 */
-	public function generate()
-	{
-		return $this->getHtml();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->generate();
-	}
-
-} 
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->generate();
+    }
+}

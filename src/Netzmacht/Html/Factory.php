@@ -11,20 +11,20 @@
 
 namespace Netzmacht\Html;
 
-use Netzmacht\Html\Element;
-
 /**
- * Interface FactoryInterface
+ * Interface FactoryInterface.
+ *
  * @package Netzmacht\Html\Factory
  */
 interface Factory
 {
-
-	/**
-	 * @param string $tag
-	 * @param array $attributes
-	 * @return Element
-	 */
-	public function createElement($tag, array $attributes=array());
-
-} 
+    /**
+     * Create an element.
+     *
+     * @param string $tag        Tag name.
+     * @param array  $attributes Attributes.
+     *
+     * @return Element
+     */
+    public function createElement($tag, array $attributes = []);
+}

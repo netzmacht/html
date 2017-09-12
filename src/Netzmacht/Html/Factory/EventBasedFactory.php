@@ -16,41 +16,48 @@ use Netzmacht\Html\Event\CreateElementEvent;
 use Netzmacht\Html\Exception\RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class EventBasedFactory.
+ *
+ * @package Netzmacht\Html\Factory
+ */
 class EventBasedFactory implements Factory
 {
-
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	protected $eventDispatcher;
-
-
-	/**
-	 * @param EventDispatcherInterface $eventDispatcher
-	 */
-	function __construct(EventDispatcherInterface $eventDispatcher)
-	{
-		$this->eventDispatcher = $eventDispatcher;
-	}
+    /**
+     * Event dispatcher.
+     *
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
 
-	/**
-	 * @param string $tag
-	 * @param array $attributes
-	 * @throws RuntimeException
-	 * @return \Netzmacht\Html\Element
-	 */
-	public function createElement($tag, array $attributes=array())
-	{
-		$event = new CreateElementEvent($tag, $attributes);
-		$this->eventDispatcher->dispatch(CreateElementEvent::NAME, $event);
-		$element = $event->getElement();
+    /**
+     * Construct.
+     *
+     * @param EventDispatcherInterface $eventDispatcher Event dispatcher.
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
-		if(!$element) {
-			throw new RuntimeException('No element created by dispatcher');
-		}
+    /**
+     * @param string $tag
+     * @param array  $attributes
+     *
+     * @throws RuntimeException
+     * @return \Netzmacht\Html\Element
+     */
+    public function createElement($tag, array $attributes = [])
+    {
+        $event = new CreateElementEvent($tag, $attributes);
+        $this->eventDispatcher->dispatch(CreateElementEvent::NAME, $event);
+        $element = $event->getElement();
 
-		return $event->getElement();
-	}
+        if (!$element) {
+            throw new RuntimeException('No element created by dispatcher');
+        }
 
+        return $event->getElement();
+    }
 }

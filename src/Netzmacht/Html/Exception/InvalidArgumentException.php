@@ -11,52 +11,81 @@
 
 namespace Netzmacht\Html\Exception;
 
+/**
+ * Class InvalidArgumentException.
+ *
+ * @package Netzmacht\Html\Exception
+ */
 class InvalidArgumentException extends \Exception
 {
-	private $propertyPath;
-	private $value;
-	private $constraints;
+    /**
+     * Property path.
+     *
+     * @var mixed
+     */
+    private $propertyPath;
 
-	public function __construct($message, $code, $propertyPath = null, $value, array $constraints = array())
-	{
-		parent::__construct($message, $code);
+    /**
+     * Given value.
+     *
+     * @var mixed
+     */
+    private $value;
 
-		$this->propertyPath = $propertyPath;
-		$this->value = $value;
-		$this->constraints = $constraints;
-	}
+    /**
+     * List of constraints.
+     *
+     * @var array
+     */
+    private $constraints;
 
-	/**
-	 * User controlled way to define a sub-property causing
-	 * the failure of a currently asserted objects.
-	 *
-	 * Useful to transport information about the nature of the error
-	 * back to higher layers.
-	 *
-	 * @return string
-	 */
-	public function getPropertyPath()
-	{
-		return $this->propertyPath;
-	}
+    /**
+     * InvalidArgumentException constructor.
+     *
+     * @param string $message      Exception message.
+     * @param int    $code         Error code.
+     * @param null   $propertyPath Property path.
+     * @param mixed  $value        Given value.
+     * @param array  $constraints  Constraints.
+     */
+    public function __construct($message, $code, $propertyPath = null, $value = null, array $constraints = [])
+    {
+        parent::__construct($message, $code);
 
-	/**
-	 * Get the value that caused the assertion to fail.
-	 *
-	 * @return mixed
-	 */
-	public function getValue()
-	{
-		return $this->value;
-	}
+        $this->propertyPath = $propertyPath;
+        $this->value        = $value;
+        $this->constraints  = $constraints;
+    }
 
-	/**
-	 * Get the constraints that applied to the failed assertion.
-	 *
-	 * @return array
-	 */
-	public function getConstraints()
-	{
-		return $this->constraints;
-	}
-} 
+    /**
+     * User controlled way to define a sub-property causing the failure of a currently asserted objects.
+     *
+     * Useful to transport information about the nature of the error back to higher layers.
+     *
+     * @return string
+     */
+    public function getPropertyPath()
+    {
+        return $this->propertyPath;
+    }
+
+    /**
+     * Get the value that caused the assertion to fail.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Get the constraints that applied to the failed assertion.
+     *
+     * @return array
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
+    }
+}

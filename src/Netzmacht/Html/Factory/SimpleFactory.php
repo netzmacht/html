@@ -14,59 +14,72 @@ namespace Netzmacht\Html\Factory;
 use Netzmacht\Html\Factory;
 use Netzmacht\Html\Element;
 
+/**
+ * Class SimpleFactory
+ *
+ * @package Netzmacht\Html\Factory
+ */
 class SimpleFactory implements Factory
 {
-	/**
-	 * All standalone elements
-	 * @var array
-	 */
-	protected static $standalone = array(
-		'area',
-		'base',
-		'basefont',
-		'br',
-		'col',
-		'frame',
-		'hr',
-		'img',
-		'input',
-		'isindex',
-		'link',
-		'meta',
-		'param'
-	);
+    /**
+     * All standalone elements
+     *
+     * @var array
+     */
+    protected static $standalone = [
+        'area',
+        'base',
+        'basefont',
+        'br',
+        'col',
+        'frame',
+        'hr',
+        'img',
+        'input',
+        'isindex',
+        'link',
+        'meta',
+        'param',
+    ];
 
 
-	/**
-	 * @param string $tag
-	 * @param array $attributes
-	 * @return Element\Node|Element\Standalone
-	 */
-	public function createElement($tag, array $attributes = array())
-	{
-		if(in_array($tag, static::$standalone)) {
-			return new Element\Standalone($tag, $attributes);
-		}
+    /**
+     * Create an element.
+     *
+     * @param string $tag        Tag name.
+     * @param array  $attributes Array of attributes.
+     *
+     * @return Element\Node|Element\Standalone
+     */
+    public function createElement($tag, array $attributes = [])
+    {
+        if (in_array($tag, static::$standalone)) {
+            return new Element\Standalone($tag, $attributes);
+        }
 
-		return new Element\Node($tag, $attributes);
-	}
-
-
-	/**
-	 * @param string[] $standalone
-	 */
-	public static function setStandalone(array $standalone)
-	{
-		self::$standalone = $standalone;
-	}
+        return new Element\Node($tag, $attributes);
+    }
 
 
-	/**
-	 * @return array
-	 */
-	public static function getStandalone()
-	{
-		return self::$standalone;
-	}
+    /**
+     * Set standalone tags.
+     *
+     * @param string[] $standalone List of standalone tags.
+     *
+     * @return void
+     */
+    public static function setStandalone(array $standalone)
+    {
+        self::$standalone = $standalone;
+    }
 
-} 
+    /**
+     * Get list of standalone tags.
+     *
+     * @return array
+     */
+    public static function getStandalone()
+    {
+        return self::$standalone;
+    }
+}

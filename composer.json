@@ -18,21 +18,17 @@
         "source":"https://github.com/netzmacht/html"
     },
     "require":{
-        "php":">=5.3"
+        "php":">=7.0",
+        "phpcq/all-tasks": "^1.2"
     },
     "require-dev": {
-        "phpspec/phpspec": "~2.1@dev",
-        "henrikbjorn/phpspec-code-coverage" : "~0.2"
+        "phpspec/phpspec": "~4"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.2.x-dev",
+            "dev-develop": "2.0.x-dev"
         }
-    },
-    "config": {
-        "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": { "Netzmacht\\Html\\": "src/" }

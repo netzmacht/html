@@ -14,156 +14,165 @@ namespace Netzmacht\Html\Element;
 use Netzmacht\Html\Element;
 
 /**
- * A Node can contain children
+ * A Node can contain children.
  *
  * @package Netzmacht\Html\Element
  */
 class Node extends Element
 {
-	const POSITION_FIRST = 'first';
-	const POSITION_LAST = 'last';
+    const POSITION_FIRST = 'first';
+    const POSITION_LAST = 'last';
 
-	/**
-	 * @var array
-	 */
-	protected $children = array();
-
-
-	/**
-	 * @param Element|string $child
-	 * @param string $position
-	 * @return $this
-	 */
-	public function addChild($child, $position=Node::POSITION_LAST)
-	{
-		if(is_int($position)) {
-			array_splice($this->children, $position, 0, array($child));
-		}
-		elseif($position == static::POSITION_FIRST) {
-			array_unshift($this->children, $child);
-		}
-		else {
-			$this->children[] = $child;
-		}
-
-		return $this;
-	}
+    /**
+     * @var array
+     */
+    protected $children = [];
 
 
-	/**
-	 * @param array $children
-	 * @return $this
-	 */
-	public function addChildren(array $children)
-	{
-		foreach($children as $child) {
-			$this->addChild($child);
-		}
+    /**
+     * Add a child.
+     *
+     * @param Element|string $child    Child content.
+     * @param string         $position Position of the child.
+     *
+     * @return $this
+     */
+    public function addChild($child, $position = Node::POSITION_LAST)
+    {
+        if (is_int($position)) {
+            array_splice($this->children, $position, 0, [$child]);
+        } elseif ($position == static::POSITION_FIRST) {
+            array_unshift($this->children, $child);
+        } else {
+            $this->children[] = $child;
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
+    /**
+     * Add a list of children.
+     *
+     * @param array $children List of children.
+     *
+     * @return $this
+     */
+    public function addChildren(array $children)
+    {
+        foreach ($children as $child) {
+            $this->addChild($child);
+        }
 
-	/**
-	 * @param Element $child
-	 * @return $this
-	 */
-	public function removeChild(Element $child)
-	{
-		$key = array_search($child, $this->children);
+        return $this;
+    }
 
-		if($key !== false) {
-			unset($this->children[$key]);
-			$this->children = array_values($this->children);
-		}
+    /**
+     * Remove a child.
+     *
+     * @param Element $child Child to remove.
+     *
+     * @return $this
+     */
+    public function removeChild(Element $child)
+    {
+        $key = array_search($child, $this->children);
 
-		return $this;
-	}
+        if ($key !== false) {
+            unset($this->children[$key]);
+            $this->children = array_values($this->children);
+        }
 
+        return $this;
+    }
 
-	/**
-	 * Remove all children
-	 *
-	 * @return $this
-	 */
-	public function removeChildren()
-	{
-		$this->children = array();
+    /**
+     * Remove all children.
+     *
+     * @return $this
+     */
+    public function removeChildren()
+    {
+        $this->children = [];
 
-		return $this;
-	}
+        return $this;
+    }
 
+    /**
+     * Get the position of a child.
+     *
+     * @param mixed $child Child.
+     *
+     * @return int|false
+     */
+    public function getChildPosition($child)
+    {
+        return array_search($child, $this->children);
+    }
 
-	/**
-	 * @param $child
-	 * @return int|false
-	 */
-	public function getChildPosition($child)
-	{
-		return array_search($child, $this->children);
-	}
+    /**
+     * Create a new child.
+     *
+     * @param string $tag        Tag of the child.
+     * @param array  $attributes Attributes.
+     * @param string $position   Position of the child.
+     *
+     * @return Node|Standalone
+     */
+    public function createChild($tag, $attributes = [], $position = Node::POSITION_LAST)
+    {
+        $child = Element::create($tag, $attributes);
+        $this->addChild($child, $position);
 
+        return $child;
+    }
 
-	/**
-	 * @param $tag
-	 * @param array $attributes
-	 * @param string $position
-	 * @return Node|Standalone
-	 */
-	public function createChild($tag, $attributes=array(), $position=Node::POSITION_LAST)
-	{
-		$child = Element::create($tag, $attributes);
-		$this->addChild($child, $position);
+    /**
+     * Get the list of children.
+     *
+     * @return array
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
 
-		return $child;
-	}
+    /**
+     * Get child content.
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->generateChildren();
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generate()
+    {
+        return sprintf(
+            '<%s %s>%s</%s>' . PHP_EOL,
+            $this->tag,
+            $this->generateAttributes(),
+            $this->generateChildren(),
+            $this->tag
+        );
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getChildren()
-	{
-		return $this->children;
-	}
+    /**
+     * Generate all children.
+     *
+     * @return string
+     */
+    private function generateChildren()
+    {
+        $buffer = '';
 
+        foreach ($this->children as $child) {
+            $buffer .= (string) $child;
+        }
 
-	/**
-	 * @return string
-	 */
-	public function getContent()
-	{
-		return $this->generateChildren();
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function generate()
-	{
-		return sprintf(
-			'<%s %s>%s</%s>' . PHP_EOL,
-			$this->tag,
-			$this->generateAttributes(),
-			$this->generateChildren(),
-			$this->tag
-		);
-	}
-
-
-	/**
-	 * @return string
-	 */
-	private function generateChildren()
-	{
-		$buffer = '';
-
-		foreach($this->children as $child) {
-			$buffer .= (string) $child;
-		}
-
-		return $buffer;
-	}
-
+        return $buffer;
+    }
 }
