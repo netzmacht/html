@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @package    dev
+ * Simple HTML library.
+ *
+ * @package    netzmacht/html
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
+ * @copyright  2014-2017 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
- *
  */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Html\Element;

@@ -1,12 +1,13 @@
 <?php
 
 /**
+ * Simple HTML library.
+ *
  * @package    netzmacht/html
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
+ * @copyright  2014-2017 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
- *
  */
 
 declare(strict_types=1);
@@ -23,7 +24,7 @@ use Netzmacht\Html\Element;
 class Node extends AbstractElement
 {
     const POSITION_FIRST = 'first';
-    const POSITION_LAST = 'last';
+    const POSITION_LAST  = 'last';
 
     /**
      * List of children.
@@ -40,7 +41,7 @@ class Node extends AbstractElement
      *
      * @return $this
      */
-    public function addChild(Element $child, string $position = Node::POSITION_LAST): self
+    public function addChild(Element $child, string $position = self::POSITION_LAST): self
     {
         if ($position == static::POSITION_FIRST) {
             array_unshift($this->children, $child);

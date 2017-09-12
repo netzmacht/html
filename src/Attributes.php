@@ -1,12 +1,13 @@
 <?php
 
 /**
+ * Simple HTML library.
+ *
  * @package    netzmacht/html
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
+ * @copyright  2014-2017 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
- *
  */
 
 namespace Netzmacht\Html;
@@ -14,9 +15,11 @@ namespace Netzmacht\Html;
 use Netzmacht\Html\Exception\InvalidArgumentException;
 
 /**
- * Class Attributes
+ * Class Attributes handles html attributes.
  *
  * @package Netzmacht\FormHelper\Html
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 {
@@ -180,7 +183,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param string $class Classes.
      *
      * @return $this
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException When an invalid class value is given.
      */
     public function addClass($class)
     {
@@ -344,9 +347,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @param string $name Name of an attribute.
      *
-     * @throws Exception\InvalidArgumentException
+     * @return void
+     * @throws InvalidArgumentException When an invalid attribute value is given.
      */
-    private function guardValidName($name)
+    private function guardValidName($name): void
     {
         if (!preg_match('@^([^\t\n\f \/>"\'=]+)$@', $name)) {
             throw new InvalidArgumentException('Invalid attribute name given', 0, null, $name);
@@ -359,9 +363,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param mixed  $value Given value.
      * @param string $error Error message.
      *
-     * @throws Exception\InvalidArgumentException
+     * @return void
+     * @throws InvalidArgumentException When value is not an array.
      */
-    private function guardIsArray($value, $error = 'Value has to be an array')
+    private function guardIsArray($value, $error = 'Value has to be an array'): void
     {
         if (!is_array($value)) {
             throw new InvalidArgumentException($error, 0, null, $value);
@@ -373,9 +378,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @param string $value Given value.
      *
-     * @throws Exception\InvalidArgumentException
+     * @return void
+     * @throws InvalidArgumentException When an invalid css id value is given.
      */
-    private function guardValidId($value)
+    private function guardValidId($value): void
     {
         if ($value === null) {
             return;
