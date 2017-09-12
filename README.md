@@ -7,14 +7,14 @@ HTML helper library
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
-This library is made as a helper library creating HTML output.
+This library is a PHP 7 helper library for creating HTML output.
 
 Install
 --------------
 
 This extension can be installed using Composer
 
-`composer require netzmacht/html:dev-master`
+`composer require netzmacht/html:~2.0`
 
 Basic Usage
 --------------
