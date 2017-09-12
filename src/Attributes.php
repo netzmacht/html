@@ -64,7 +64,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
         }
     }
 
-
     /**
      * Set an attribute.
      *
@@ -117,7 +116,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
         return isset($this->attributes[$name]);
     }
 
-
     /**
      * Remove an attribute.
      *
@@ -151,7 +149,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 
         return $this;
     }
-
 
     /**
      * Get all attributes as array.
@@ -318,7 +315,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
         return $this->getAttribute($offset);
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -334,7 +330,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     {
         $this->removeAttribute($offset);
     }
-
 
     /**
      * {@inheritdoc}
