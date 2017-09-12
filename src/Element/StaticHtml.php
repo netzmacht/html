@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Netzmacht\Html\Element;
 
-use Netzmacht\Html\CastsToString;
+use Netzmacht\Html\Element;
 
 /**
  * Class StaticHtml.
  *
  * @package Netzmacht\Html\Element
  */
-class StaticHtml implements CastsToString
+class StaticHtml implements Element
 {
     /**
      * Html content.

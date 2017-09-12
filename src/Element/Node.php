@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
@@ -18,30 +20,29 @@ use Netzmacht\Html\Element;
  *
  * @package Netzmacht\Html\Element
  */
-class Node extends Element
+class Node extends AbstractElement
 {
     const POSITION_FIRST = 'first';
     const POSITION_LAST = 'last';
 
     /**
+     * List of children.
+     *
      * @var array
      */
     protected $children = [];
 
-
     /**
      * Add a child.
      *
-     * @param Element|string $child    Child content.
-     * @param string         $position Position of the child.
+     * @param Element $child    Child content.
+     * @param string  $position Position of the child.
      *
      * @return $this
      */
-    public function addChild($child, $position = Node::POSITION_LAST)
+    public function addChild(Element $child, string $position = Node::POSITION_LAST): self
     {
-        if (is_int($position)) {
-            array_splice($this->children, $position, 0, [$child]);
-        } elseif ($position == static::POSITION_FIRST) {
+        if ($position == static::POSITION_FIRST) {
             array_unshift($this->children, $child);
         } else {
             $this->children[] = $child;
@@ -57,7 +58,7 @@ class Node extends Element
      *
      * @return $this
      */
-    public function addChildren(array $children)
+    public function addChildren(array $children): self
     {
         foreach ($children as $child) {
             $this->addChild($child);
@@ -69,11 +70,11 @@ class Node extends Element
     /**
      * Remove a child.
      *
-     * @param Element $child Child to remove.
+     * @param AbstractElement $child Child to remove.
      *
      * @return $this
      */
-    public function removeChild(Element $child)
+    public function removeChild(AbstractElement $child): self
     {
         $key = array_search($child, $this->children);
 
@@ -90,7 +91,7 @@ class Node extends Element
      *
      * @return $this
      */
-    public function removeChildren()
+    public function removeChildren(): self
     {
         $this->children = [];
 
@@ -98,40 +99,11 @@ class Node extends Element
     }
 
     /**
-     * Get the position of a child.
-     *
-     * @param mixed $child Child.
-     *
-     * @return int|false
-     */
-    public function getChildPosition($child)
-    {
-        return array_search($child, $this->children);
-    }
-
-    /**
-     * Create a new child.
-     *
-     * @param string $tag        Tag of the child.
-     * @param array  $attributes Attributes.
-     * @param string $position   Position of the child.
-     *
-     * @return Node|Standalone
-     */
-    public function createChild($tag, $attributes = [], $position = Node::POSITION_LAST)
-    {
-        $child = Element::create($tag, $attributes);
-        $this->addChild($child, $position);
-
-        return $child;
-    }
-
-    /**
      * Get the list of children.
      *
-     * @return array
+     * @return Element[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
@@ -141,7 +113,7 @@ class Node extends Element
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->generateChildren();
     }
@@ -149,7 +121,7 @@ class Node extends Element
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         return sprintf(
             '<%s %s>%s</%s>' . PHP_EOL,
@@ -165,7 +137,7 @@ class Node extends Element
      *
      * @return string
      */
-    private function generateChildren()
+    private function generateChildren(): string
     {
         $buffer = '';
 

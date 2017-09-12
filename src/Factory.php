@@ -26,5 +26,5 @@ interface Factory
      *
      * @return Element
      */
-    public function createElement($tag, array $attributes = []);
+    public function create(string $tag, array $attributes = []): Element;
 }

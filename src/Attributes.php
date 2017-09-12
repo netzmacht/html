@@ -12,7 +12,6 @@
 namespace Netzmacht\Html;
 
 use Netzmacht\Html\Exception\InvalidArgumentException;
-use Traversable;
 
 /**
  * Class Attributes
@@ -48,7 +47,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
         'required',
         'selected',
     ];
-
 
     /**
      * Construct.
@@ -279,7 +277,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         $buffer   = '';
         $template = ' %s="%s"';
@@ -341,7 +339,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->generate();
     }

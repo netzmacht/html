@@ -11,19 +11,17 @@
 
 namespace Netzmacht\Html\Element;
 
-use Netzmacht\Html\Element;
-
 /**
  * Standalone elements does not have an closing tag
  *
  * @package Netzmacht\Html\Element
  */
-class Standalone extends Element
+class StandaloneElement extends AbstractElement
 {
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         return sprintf(
             '<%s %s>' . PHP_EOL,

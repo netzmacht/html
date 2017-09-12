@@ -9,17 +9,21 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Html\Factory;
 
-use Netzmacht\Html\Factory;
 use Netzmacht\Html\Element;
+use Netzmacht\Html\Element\Node;
+use Netzmacht\Html\Element\StandaloneElement;
+use Netzmacht\Html\Factory;
 
 /**
  * Class SimpleFactory
  *
  * @package Netzmacht\Html\Factory
  */
-class SimpleFactory implements Factory
+class ElementFactory implements Factory
 {
     /**
      * All standalone elements
@@ -49,15 +53,15 @@ class SimpleFactory implements Factory
      * @param string $tag        Tag name.
      * @param array  $attributes Array of attributes.
      *
-     * @return Element\Node|Element\Standalone
+     * @return Element
      */
-    public function createElement($tag, array $attributes = [])
+    public function create(string $tag, array $attributes = []): Element
     {
         if (in_array($tag, static::$standalone)) {
-            return new Element\Standalone($tag, $attributes);
+            return new StandaloneElement($tag, $attributes);
         }
 
-        return new Element\Node($tag, $attributes);
+        return new Node($tag, $attributes);
     }
 
 

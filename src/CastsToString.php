@@ -23,12 +23,12 @@ interface CastsToString
      *
      * @return string
      */
-    public function generate();
+    public function generate(): string;
 
     /**
      * Cast to string method.
      *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }
