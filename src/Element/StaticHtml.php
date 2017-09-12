@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Html\Element;
 
 use Netzmacht\Html\CastsToString;
@@ -32,31 +34,15 @@ class StaticHtml implements CastsToString
      *
      * @param string $html Html content.
      */
-    public function __construct($html)
+    public function __construct(string $html)
     {
         $this->html = $html;
     }
 
     /**
-     * Set the html content.
-     *
-     * @param string $html Html content.
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setHtml($html)
-    {
-        $this->html = $html;
-
-        return $this;
-    }
-
-    /**
-     * Get the html content.
-     *
-     * @return string
-     */
-    public function getHtml()
+    public function generate(): string
     {
         return $this->html;
     }
@@ -64,15 +50,7 @@ class StaticHtml implements CastsToString
     /**
      * {@inheritdoc}
      */
-    public function generate()
-    {
-        return $this->getHtml();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->generate();
     }
