@@ -36,13 +36,17 @@ class Node extends AbstractElement
     /**
      * Add a child.
      *
-     * @param Element $child    Child content.
-     * @param string  $position Position of the child.
+     * @param Element|string $child    Child content.
+     * @param string         $position Position of the child.
      *
      * @return $this
      */
-    public function addChild(Element $child, string $position = self::POSITION_LAST): self
+    public function addChild($child, string $position = self::POSITION_LAST): self
     {
+        if (!$child instanceof Element) {
+            $child = new StaticElement($child);
+        }
+
         if ($position == static::POSITION_FIRST) {
             array_unshift($this->children, $child);
         } else {
@@ -71,11 +75,11 @@ class Node extends AbstractElement
     /**
      * Remove a child.
      *
-     * @param AbstractElement $child Child to remove.
+     * @param Element $child Child to remove.
      *
      * @return $this
      */
-    public function removeChild(AbstractElement $child): self
+    public function removeChild(Element $child): self
     {
         $key = array_search($child, $this->children);
 

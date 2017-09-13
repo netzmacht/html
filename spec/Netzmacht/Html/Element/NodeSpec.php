@@ -12,6 +12,7 @@
 namespace spec\Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element\Node;
+use Netzmacht\Html\Element\StaticElement;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -118,5 +119,12 @@ class NodeSpec extends ObjectBehavior
 
         $this->addChild($a);
         $this->generate()->shouldReturn('<p class="example" id="test">' . $content . '</p>' . PHP_EOL);
+    }
+
+    function it_creates_static_element_for_scalar_content()
+    {
+        $this->addChild('test');
+        $this->getChildren()[0]->shouldHaveType(StaticElement::class);
+        $this->getChildren()[0]->__toString()->shouldReturn('test');
     }
 }
