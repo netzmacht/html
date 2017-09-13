@@ -7,7 +7,7 @@ HTML helper library
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
-This library is a PHP 7 helper library for creating HTML output.
+This library is a PHP 7.1 helper library for creating HTML output.
 
 Install
 --------------
@@ -58,16 +58,17 @@ have any children and *nodes* which have children. Notice that the css classes a
 
 ```php
 
-$paragraph = Netzmacht\Html\Factory\ElementFactory::create('p', array('id' => 'a_id', 'class' => array('description'));
-$label     = $paragraph->create('span');
+$factory   = new Netzmacht\Html\Factory\ElementFactory();
+$paragraph = $factory->create('p', array('id' => 'a_id', 'class' => array('description'));
+$label     = $factory->create('span');
 
 $label
     ->addClass('label')
     ->addChild('Label this');
 
 $paragraph
-    ->addChild(new StaticElement('This is a paragraph.'))
-    ->addChild(new StaticElement(' ')); // add space between both elements
+    ->addChild('This is a paragraph.')
+    ->addChild(' '); // add space between both elements
     ->addChild($label, Netzmacht\Html\Element\Node::POSITION_FIRST); // add at first position    
 
 ```
@@ -79,5 +80,30 @@ Now you can output the whole element:
 <article>
     <?= $paragraph; ?>
 </article>
+
+```
+
+Integrations
+------------
+
+This library provides a [Symfony Bundle](https://www.symfony.com) and [Contao Manager Plugin](https://contao.org) as integration.
+
+### Symfony 
+
+```php
+<?php 
+
+// Register your bundle in the AppKernel
+public function getBundles()
+{
+    return [
+        // ...
+        new Netzmacht\Html\Infrastructure\SymfonyBundle\NetzmachtHtmlBundle()
+    ];
+}
+
+// Use the factory
+$factory = $container->get('netzmacht.html.factory');
+$element = $factory->create('p');
 
 ```

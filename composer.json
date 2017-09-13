@@ -23,9 +23,14 @@
         "phpcq/coding-standard": "^2.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "~4"
+        "phpspec/phpspec": "~4",
+        "contao/manager-plugin": "^2.1"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
     },
     "extra": {
+        "contao-manager-plugin": "Netzmacht\\Html\\Infrastructure\\ContaoManager\\Plugin",
         "branch-alias": {
             "dev-master": "1.2.x-dev",
             "dev-develop": "2.0.x-dev"
