@@ -31,7 +31,7 @@ class ElementFactory implements Factory
      *
      * @var array
      */
-    protected static $standalone = [
+    private $standalone = [
         'area',
         'base',
         'basefont',
@@ -48,6 +48,18 @@ class ElementFactory implements Factory
     ];
 
     /**
+     * ElementFactory constructor.
+     *
+     * @param array $standalone Override the standalone elements.
+     */
+    public function __construct(array $standalone = null)
+    {
+        if ($standalone) {
+            $this->standalone = $standalone;
+        }
+    }
+
+    /**
      * Create an element.
      *
      * @param string $tag        Tag name.
@@ -57,32 +69,10 @@ class ElementFactory implements Factory
      */
     public function create(string $tag, array $attributes = []): Element
     {
-        if (in_array($tag, static::$standalone)) {
+        if (in_array($tag, $this->standalone)) {
             return new StandaloneElement($tag, $attributes);
         }
 
         return new Node($tag, $attributes);
-    }
-
-    /**
-     * Set standalone tags.
-     *
-     * @param string[] $standalone List of standalone tags.
-     *
-     * @return void
-     */
-    public static function setStandalone(array $standalone)
-    {
-        self::$standalone = $standalone;
-    }
-
-    /**
-     * Get list of standalone tags.
-     *
-     * @return array
-     */
-    public static function getStandalone()
-    {
-        return self::$standalone;
     }
 }
