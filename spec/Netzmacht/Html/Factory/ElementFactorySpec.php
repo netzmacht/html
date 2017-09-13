@@ -52,24 +52,7 @@ class ElementFactorySpec extends ObjectBehavior
     {
         $standalone = ['p'];
 
-        $this->create('p')->shouldHaveType(Node::class);
-        $this->setStandalone($standalone);
+        $this->beConstructedWith($standalone);
         $this->create('p')->shouldHaveType(StandaloneElement::class);
-    }
-
-    function it_returns_current_standalone_config()
-    {
-        $standalone = ['p'];
-
-        $this->setStandalone(['p']);
-        $this->getStandalone()->shouldReturn($standalone);
-    }
-
-    function it_has_global_standalone_config()
-    {
-        $standalone = ['p'];
-
-        ElementFactory::setStandalone($standalone);
-        $this->getStandalone()->shouldReturn($standalone);
     }
 }
