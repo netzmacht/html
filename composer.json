@@ -18,12 +18,11 @@
         "source":"https://github.com/netzmacht/html"
     },
     "require":{
-        "php":">=7.1",
-        "phpcq/all-tasks": "^1.2",
-        "phpcq/coding-standard": "^2.0"
+        "php":">=7.1"
     },
     "require-dev": {
         "phpspec/phpspec": "~4",
+        "phpcq/all-tasks": "^1.2",
         "contao/manager-plugin": "^2.1"
     },
     "conflict": {
