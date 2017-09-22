@@ -1,20 +1,23 @@
 language: php
 
-env:
-  -
-
 php:
-  - 5.3
-  - 5.4
-  - 5.5
+  - "7.0"
+  - "7.1"
+
+matrix:
+  exclude:
+
+sudo: false
 
 install:
-  - composer self-update
-  - composer install --dev
+  - travis_retry composer self-update && composer --version
+  - travis_retry composer update --prefer-dist --no-interaction
 
-script:
-  - ./bin/phpspec run
+script: ant -keep-going
 
-after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage
+git:
+  depth: 2147483647
+
+cache:
+  directories:
+    - vendor

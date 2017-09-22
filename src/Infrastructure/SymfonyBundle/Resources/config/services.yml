@@ -1,0 +1,3 @@
+services:
+  netzmacht.html.factory:
+    class: Netzmacht\Html\Factory\ElementFactory
