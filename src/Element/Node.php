@@ -1,35 +1,30 @@
 <?php
 
-/**
- * Simple HTML library.
- *
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014-2017 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
 
+use function array_search;
+use function array_unshift;
+use function array_values;
+use function sprintf;
+
+use const PHP_EOL;
+
 /**
  * A Node can contain children.
- *
- * @package Netzmacht\Html\Element
  */
 class Node extends AbstractElement
 {
-    const POSITION_FIRST = 'first';
-    const POSITION_LAST  = 'last';
+    public const POSITION_FIRST = 'first';
+    public const POSITION_LAST  = 'last';
 
     /**
      * List of children.
      *
-     * @var array
+     * @var list<Element|string>
      */
     protected $children = [];
 
@@ -43,11 +38,11 @@ class Node extends AbstractElement
      */
     public function addChild($child, string $position = self::POSITION_LAST): self
     {
-        if (!$child instanceof Element) {
+        if (! $child instanceof Element) {
             $child = new StaticElement($child);
         }
 
-        if ($position == static::POSITION_FIRST) {
+        if ($position === self::POSITION_FIRST) {
             array_unshift($this->children, $child);
         } else {
             $this->children[] = $child;
@@ -59,7 +54,7 @@ class Node extends AbstractElement
     /**
      * Add a list of children.
      *
-     * @param array $children List of children.
+     * @param list<Element|string> $children List of children.
      *
      * @return $this
      */
@@ -115,17 +110,12 @@ class Node extends AbstractElement
 
     /**
      * Get child content.
-     *
-     * @return string
      */
     public function getContent(): string
     {
         return $this->generateChildren();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(): string
     {
         return sprintf(
@@ -139,8 +129,6 @@ class Node extends AbstractElement
 
     /**
      * Generate all children.
-     *
-     * @return string
      */
     private function generateChildren(): string
     {

@@ -1,39 +1,46 @@
 <?php
 
-/**
- * Simple HTML library.
- *
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014-2017 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
- */
+declare(strict_types=1);
 
 namespace Netzmacht\Html;
 
+use ArrayAccess;
+use ArrayIterator;
+use IteratorAggregate;
 use Netzmacht\Html\Exception\InvalidArgumentException;
 
+use function array_filter;
+use function array_map;
+use function array_search;
+use function array_values;
+use function explode;
+use function htmlspecialchars;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function preg_match;
+use function sprintf;
+use function strlen;
+use function strpos;
+use function trim;
+
 /**
- * Class Attributes handles html attributes.
- *
- * @package Netzmacht\FormHelper\Html
- *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
+class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
 {
     /**
      * Array of attributes.
      *
-     * @var array
+     * @var array<string,mixed>
      */
     protected $attributes;
 
     /**
      * List of boolean attributes.
      *
-     * @var array
+     * @var list<string>
      */
     private static $booleanAttributes = [
         'compact',
@@ -54,7 +61,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * Construct.
      *
-     * @param array $attributes Attributes.
+     * @param array<string,mixed> $attributes Attributes.
      */
     public function __construct(array $attributes = [])
     {
@@ -74,13 +81,14 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param mixed  $value Value of the attribute.
      *
      * @return $this
+     *
      * @throws InvalidArgumentException When an invalid value is given.
      */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, $value)
     {
         $this->guardValidName($name);
 
-        if ($name == 'class') {
+        if ($name === 'class') {
             $this->guardIsArray($value, 'Classes have to be set as array');
             $this->addClasses($value);
         } else {
@@ -98,7 +106,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @return mixed
      */
-    public function getAttribute($name, $default = null)
+    public function getAttribute(string $name, $default = null)
     {
         if ($this->hasAttribute($name)) {
             return $this->attributes[$name];
@@ -111,10 +119,8 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * Check if attribute exists.
      *
      * @param string $name Attribute name.
-     *
-     * @return bool
      */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name): bool
     {
         return isset($this->attributes[$name]);
     }
@@ -126,9 +132,9 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @return $this
      */
-    public function removeAttribute($name)
+    public function removeAttribute(string $name)
     {
-        if ($name == 'class') {
+        if ($name === 'class') {
             $this->attributes['class'] = [];
         } else {
             unset($this->attributes[$name]);
@@ -140,7 +146,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * Add a map of attributes.
      *
-     * @param array $attributes Map of attributes.
+     * @param array<string,mixed> $attributes Map of attributes.
      *
      * @return $this
      */
@@ -156,9 +162,9 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * Get all attributes as array.
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
@@ -167,10 +173,8 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * Check if an class exists.
      *
      * @param string $name Class name.
-     *
-     * @return bool
      */
-    public function hasClass($name)
+    public function hasClass(string $name): bool
     {
         $classes = $this->getAttribute('class');
 
@@ -183,9 +187,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param string $class Classes.
      *
      * @return $this
+     *
      * @throws InvalidArgumentException When an invalid class value is given.
      */
-    public function addClass($class)
+    public function addClass(string $class)
     {
         // split multiple classes
         if (strpos($class, ' ') !== false) {
@@ -198,7 +203,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
             return $this;
         }
 
-        if ($class && !$this->hasClass($class)) {
+        if ($class && ! $this->hasClass($class)) {
             $this->attributes['class'][] = $class;
         }
 
@@ -211,9 +216,10 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param string $value Element id.
      *
      * @return $this
+     *
      * @throws InvalidArgumentException When an invalid id value is given.
      */
-    public function setId($value)
+    public function setId(string $value)
     {
         $this->guardValidId($value);
         $this->setAttribute('id', $value);
@@ -223,10 +229,8 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
 
     /**
      * Get the id.
-     *
-     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->getAttribute('id');
     }
@@ -238,7 +242,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @return $this
      */
-    public function removeClass($name)
+    public function removeClass(string $name)
     {
         $index = array_search($name, $this->attributes['class']);
 
@@ -253,7 +257,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
     /**
      * Add a list of classes.
      *
-     * @param array $classes List of classes.
+     * @param list<string> $classes List of classes.
      *
      * @return $this
      */
@@ -271,12 +275,9 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->attributes);
+        return new ArrayIterator($this->attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(): string
     {
         $buffer   = '';
@@ -287,8 +288,8 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
                 if ($value) {
                     $buffer .= ' ' . htmlspecialchars($name);
                 }
-            } elseif ($name == 'class') {
-                if (!empty($value)) {
+            } elseif ($name === 'class') {
+                if (! empty($value)) {
                     $value = array_map('htmlspecialchars', $value);
                     $value = implode(' ', $value);
 
@@ -334,9 +335,6 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
         $this->removeAttribute($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString(): string
     {
         return $this->generate();
@@ -347,12 +345,11 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @param string $name Name of an attribute.
      *
-     * @return void
      * @throws InvalidArgumentException When an invalid attribute value is given.
      */
-    private function guardValidName($name): void
+    private function guardValidName(string $name): void
     {
-        if (!preg_match('@^([^\t\n\f \/>"\'=]+)$@', $name)) {
+        if (! preg_match('@^([^\t\n\f \/>"\'=]+)$@', $name)) {
             throw new InvalidArgumentException('Invalid attribute name given', 0, null, $name);
         }
     }
@@ -363,12 +360,11 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      * @param mixed  $value Given value.
      * @param string $error Error message.
      *
-     * @return void
      * @throws InvalidArgumentException When value is not an array.
      */
-    private function guardIsArray($value, $error = 'Value has to be an array'): void
+    private function guardIsArray($value, string $error = 'Value has to be an array'): void
     {
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             throw new InvalidArgumentException($error, 0, null, $value);
         }
     }
@@ -378,16 +374,15 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
      *
      * @param string $value Given value.
      *
-     * @return void
      * @throws InvalidArgumentException When an invalid css id value is given.
      */
-    private function guardValidId($value): void
+    private function guardValidId(string $value): void
     {
         if ($value === null) {
             return;
         }
 
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             throw new InvalidArgumentException('Css ID has to be a string.', 0, null, $value);
         }
 
@@ -395,7 +390,7 @@ class Attributes implements CastsToString, \IteratorAggregate, \ArrayAccess
             throw new InvalidArgumentException('Css ID requires at least one character.', 0, null, $value);
         }
 
-        if (!preg_match('/^[^\s]*$/s', $value)) {
+        if (! preg_match('/^[^\s]*$/s', $value)) {
             throw new InvalidArgumentException('Css ID cannot contain a space character.', 0, null, $value);
         }
     }

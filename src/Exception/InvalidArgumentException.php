@@ -1,25 +1,12 @@
 <?php
 
-/**
- * Simple HTML library.
- *
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014-2017 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Html\Exception;
 
-/**
- * Class InvalidArgumentException.
- *
- * @package Netzmacht\Html\Exception
- */
-class InvalidArgumentException extends \Exception
+use Exception;
+
+class InvalidArgumentException extends Exception
 {
     /**
      * Property path.
@@ -38,21 +25,24 @@ class InvalidArgumentException extends \Exception
     /**
      * List of constraints.
      *
-     * @var array
+     * @var list<string>
      */
     private $constraints;
 
     /**
-     * InvalidArgumentException constructor.
-     *
-     * @param string $message      Exception message.
-     * @param int    $code         Error code.
-     * @param null   $propertyPath Property path.
-     * @param mixed  $value        Given value.
-     * @param array  $constraints  Constraints.
+     * @param string       $message      Exception message.
+     * @param int          $code         Error code.
+     * @param null         $propertyPath Property path.
+     * @param mixed        $value        Given value.
+     * @param list<string> $constraints  Constraints.
      */
-    public function __construct($message, $code, $propertyPath = null, $value = null, array $constraints = [])
-    {
+    public function __construct(
+        string $message,
+        int $code,
+        $propertyPath = null,
+        $value = null,
+        array $constraints = []
+    ) {
         parent::__construct($message, $code);
 
         $this->propertyPath = $propertyPath;
@@ -64,10 +54,8 @@ class InvalidArgumentException extends \Exception
      * User controlled way to define a sub-property causing the failure of a currently asserted objects.
      *
      * Useful to transport information about the nature of the error back to higher layers.
-     *
-     * @return string
      */
-    public function getPropertyPath()
+    public function getPropertyPath(): string
     {
         return $this->propertyPath;
     }
@@ -85,9 +73,9 @@ class InvalidArgumentException extends \Exception
     /**
      * Get the constraints that applied to the failed assertion.
      *
-     * @return array
+     * @return list<string>
      */
-    public function getConstraints()
+    public function getConstraints(): array
     {
         return $this->constraints;
     }

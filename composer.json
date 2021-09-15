@@ -1,41 +1,48 @@
 {
-    "name":"netzmacht/html",
-    "description":"Simple library for html rendering",
-    "keywords":["Html", "helper"],
-    "type":"library",
-    "license":"LGPL-3.0+",
-    "authors":[
-        {
-            "name":"David Molineus",
-            "email":"mail@netzmacht.de",
-            "homepage":"http://www.netzmacht.de",
-            "role":"Project leader"
-        }
-    ],
-    "support":{
-        "email":"mail@netzmacht.de",
-        "issues":"https://github.com/netzmacht/html/issues",
-        "source":"https://github.com/netzmacht/html"
-    },
-    "require":{
-        "php":">=7.1"
-    },
-    "require-dev": {
-        "phpspec/phpspec": "~4",
-        "phpcq/all-tasks": "^1.2",
-        "contao/manager-plugin": "^2.1"
-    },
-    "conflict": {
-        "contao/manager-plugin": "<2.0 || >=3.0"
-    },
-    "extra": {
-        "contao-manager-plugin": "Netzmacht\\Html\\Infrastructure\\ContaoManager\\Plugin",
-        "branch-alias": {
-            "dev-master": "2.0.x-dev",
-            "dev-develop": "2.1.x-dev"
-        }
-    },
-    "autoload": {
-        "psr-4": { "Netzmacht\\Html\\": "src/" }
+  "name": "netzmacht/html",
+  "type": "library",
+  "description": "Simple library for html rendering",
+  "keywords": [
+    "Html",
+    "helper"
+  ],
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "David Molineus",
+      "email": "mail@netzmacht.de",
+      "homepage": "http://www.netzmacht.de",
+      "role": "Project leader"
     }
+  ],
+  "require": {
+    "php": "^7.3 || ^8.0"
+  },
+  "conflict": {
+    "contao/manager-plugin": "<2.0 || >=3.0",
+    "symfony/config": "<4.4 || >= 6.0"
+  },
+  "require-dev": {
+    "contao/manager-plugin": "^2.1",
+    "doctrine/coding-standard": "^8.0",
+    "phpcq/runner-bootstrap": "^1.0@dev",
+    "phpspec/phpspec": "~7"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "2.1.x-dev",
+      "dev-master": "2.0.x-dev"
+    },
+    "contao-manager-plugin": "Netzmacht\\Html\\Infrastructure\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Netzmacht\\Html\\": "src/"
+    }
+  },
+  "support": {
+    "email": "mail@netzmacht.de",
+    "issues": "https://github.com/netzmacht/html/issues",
+    "source": "https://github.com/netzmacht/html"
+  }
 }

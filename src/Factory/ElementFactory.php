@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Simple HTML library.
- *
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014-2017 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Html\Factory;
@@ -19,17 +9,14 @@ use Netzmacht\Html\Element\Node;
 use Netzmacht\Html\Element\StandaloneElement;
 use Netzmacht\Html\Factory;
 
-/**
- * Class SimpleFactory
- *
- * @package Netzmacht\Html\Factory
- */
+use function in_array;
+
 class ElementFactory implements Factory
 {
     /**
      * All standalone elements.
      *
-     * @var array
+     * @var list<string>
      */
     private $standalone = [
         'area',
@@ -48,24 +35,22 @@ class ElementFactory implements Factory
     ];
 
     /**
-     * ElementFactory constructor.
-     *
-     * @param array $standalone Override the standalone elements.
+     * @param list<string>|null $standalone Override the standalone elements.
      */
-    public function __construct(array $standalone = null)
+    public function __construct(?array $standalone = null)
     {
-        if ($standalone) {
-            $this->standalone = $standalone;
+        if (! $standalone) {
+            return;
         }
+
+        $this->standalone = $standalone;
     }
 
     /**
      * Create an element.
      *
-     * @param string $tag        Tag name.
-     * @param array  $attributes Array of attributes.
-     *
-     * @return Element
+     * @param string              $tag        Tag name.
+     * @param array<string,mixed> $attributes Array of attributes.
      */
     public function create(string $tag, array $attributes = []): Element
     {

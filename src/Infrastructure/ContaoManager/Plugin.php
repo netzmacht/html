@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Simple HTML library.
- *
- * @package    html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL 3.0
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Html\Infrastructure\ContaoManager;
@@ -21,8 +11,6 @@ use Netzmacht\Html\Infrastructure\SymfonyBundle\NetzmachtHtmlBundle;
 
 /**
  * Contao manager plugin for auto registering the symfony bundle.
- *
- * @package Netzmacht\Html\Infrastructure\ContaoManager
  */
 class Plugin implements BundlePluginInterface
 {
@@ -31,8 +19,6 @@ class Plugin implements BundlePluginInterface
      */
     public function getBundles(ParserInterface $parser)
     {
-        return [
-            BundleConfig::create(NetzmachtHtmlBundle::class)
-        ];
+        return [BundleConfig::create(NetzmachtHtmlBundle::class)];
     }
 }

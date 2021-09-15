@@ -1,6 +1,7 @@
-.idea
-vendor
-bin/phpspec
+/vendor
 coverage
 
 composer.lock
+
+.phpcq
+.phpcs-cache
