@@ -2,17 +2,6 @@
   "symbol-whitelist": [
     "null", "true", "false",
     "static", "self", "parent",
-    "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object",
-    "Contao\\ManagerPlugin\\Bundle\\BundlePluginInterface",
-    "Contao\\ManagerPlugin\\Bundle\\Config\\BundleConfig",
-    "Contao\\ManagerPlugin\\Bundle\\Parser\\ParserInterface",
-    "Contao\\ManagerPlugin\\Routing\\RoutingPluginInterface",
-    "Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder",
-    "Symfony\\Component\\Config\\Definition\\ConfigurationInterface",
-    "Symfony\\Component\\Config\\FileLocator",
-    "Symfony\\Component\\DependencyInjection\\ContainerBuilder",
-    "Symfony\\Component\\DependencyInjection\\Extension\\Extension",
-    "Symfony\\Component\\DependencyInjection\\Loader\\YamlFileLoader",
-    "Symfony\\Component\\HttpKernel\\Bundle\\Bundle"
+    "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object"
   ]
 }

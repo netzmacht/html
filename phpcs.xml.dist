@@ -31,10 +31,6 @@
         <exclude-pattern>*/languages/*/*\.php</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod">
-        <exclude-pattern>*/Data/Extractor/*Extractor\.php</exclude-pattern>
-    </rule>
-
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <properties>
             <property name="enableObjectTypeHint" value="false" />

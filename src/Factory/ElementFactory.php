@@ -18,7 +18,7 @@ class ElementFactory implements Factory
      *
      * @var list<string>
      */
-    private $standalone = [
+    private array $standalone = [
         'area',
         'base',
         'basefont',
@@ -34,10 +34,8 @@ class ElementFactory implements Factory
         'param',
     ];
 
-    /**
-     * @param list<string>|null $standalone Override the standalone elements.
-     */
-    public function __construct(?array $standalone = null)
+    /** @param list<string>|null $standalone Override the standalone elements. */
+    public function __construct(array|null $standalone = null)
     {
         if (! $standalone) {
             return;
@@ -54,7 +52,7 @@ class ElementFactory implements Factory
      */
     public function create(string $tag, array $attributes = []): Element
     {
-        if (in_array($tag, $this->standalone)) {
+        if (in_array($tag, $this->standalone, true)) {
             return new StandaloneElement($tag, $attributes);
         }
 

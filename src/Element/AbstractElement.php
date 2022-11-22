@@ -10,21 +10,12 @@ use Netzmacht\Html\Element;
 abstract class AbstractElement extends Attributes implements Element
 {
     /**
-     * Tag name.
-     *
-     * @var string
-     */
-    protected $tag;
-
-    /**
      * @param string              $tag        Tag name.
      * @param array<string,mixed> $attributes List of attributes.
      */
-    public function __construct(string $tag, array $attributes = [])
+    public function __construct(protected string $tag, array $attributes = [])
     {
         parent::__construct($attributes);
-
-        $this->tag = $tag;
     }
 
     /**

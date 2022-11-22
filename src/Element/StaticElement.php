@@ -6,23 +6,15 @@ namespace Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
 
-class StaticElement implements Element
+final class StaticElement implements Element
 {
-    /**
-     * Element content.
-     *
-     * @var string
-     */
-    private $content;
-
     /**
      * Construct.
      *
      * @param string $content Element content.
      */
-    public function __construct(string $content)
+    public function __construct(private readonly string $content)
     {
-        $this->content = $content;
     }
 
     public function generate(): string
