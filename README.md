@@ -5,7 +5,6 @@ HTML helper library
 [![Version](http://img.shields.io/packagist/v/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![License](http://img.shields.io/packagist/l/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
-[![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
 This library is a PHP helper library for creating HTML output.
 
