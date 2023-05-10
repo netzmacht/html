@@ -9,45 +9,20 @@ use Exception;
 class InvalidArgumentException extends Exception
 {
     /**
-     * Property path.
-     *
-     * @var mixed
-     */
-    private $propertyPath;
-
-    /**
-     * Given value.
-     *
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * List of constraints.
-     *
-     * @var list<string>
-     */
-    private $constraints;
-
-    /**
      * @param string       $message      Exception message.
      * @param int          $code         Error code.
-     * @param null         $propertyPath Property path.
+     * @param string|null  $propertyPath Property path.
      * @param mixed        $value        Given value.
      * @param list<string> $constraints  Constraints.
      */
     public function __construct(
         string $message,
         int $code,
-        $propertyPath = null,
-        $value = null,
-        array $constraints = []
+        private readonly string|null $propertyPath = null,
+        private readonly mixed $value = null,
+        private readonly array $constraints = [],
     ) {
         parent::__construct($message, $code);
-
-        $this->propertyPath = $propertyPath;
-        $this->value        = $value;
-        $this->constraints  = $constraints;
     }
 
     /**
@@ -62,10 +37,8 @@ class InvalidArgumentException extends Exception
 
     /**
      * Get the value that caused the assertion to fail.
-     *
-     * @return mixed
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }

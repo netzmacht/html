@@ -24,9 +24,9 @@ class Node extends AbstractElement
     /**
      * List of children.
      *
-     * @var list<Element|string>
+     * @var list<Element>
      */
-    protected $children = [];
+    protected array $children = [];
 
     /**
      * Add a child.
@@ -36,7 +36,7 @@ class Node extends AbstractElement
      *
      * @return $this
      */
-    public function addChild($child, string $position = self::POSITION_LAST): self
+    public function addChild(Element|string $child, string $position = self::POSITION_LAST): self
     {
         if (! $child instanceof Element) {
             $child = new StaticElement($child);
@@ -76,7 +76,7 @@ class Node extends AbstractElement
      */
     public function removeChild(Element $child): self
     {
-        $key = array_search($child, $this->children);
+        $key = array_search($child, $this->children, true);
 
         if ($key !== false) {
             unset($this->children[$key]);
@@ -101,7 +101,7 @@ class Node extends AbstractElement
     /**
      * Get the list of children.
      *
-     * @return Element[]
+     * @return list<Element>
      */
     public function getChildren(): array
     {
@@ -120,10 +120,10 @@ class Node extends AbstractElement
     {
         return sprintf(
             '<%s %s>%s</%s>' . PHP_EOL,
-            $this->tag,
+            $this->getTag(),
             $this->generateAttributes(),
             $this->generateChildren(),
-            $this->tag
+            $this->getTag(),
         );
     }
 
@@ -135,7 +135,7 @@ class Node extends AbstractElement
         $buffer = '';
 
         foreach ($this->children as $child) {
-            $buffer .= (string) $child;
+            $buffer .= $child->generate();
         }
 
         return $buffer;

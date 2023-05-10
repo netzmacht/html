@@ -1,23 +1,29 @@
 HTML helper library
 ===================
 
-[![Build Status](http://img.shields.io/travis/netzmacht/html/master.svg?style=flat-square)](https://travis-ci.org/netzmacht/html)
+[![Build Status](https://img.shields.io/github/workflow/status/netzmacht/html/Code%20Quality%20Diagnostics/master?style=for-the-badge)](https://github.com/netzmacht/html/actions/workflows/diagnostics.yml)
 [![Version](http://img.shields.io/packagist/v/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![License](http://img.shields.io/packagist/l/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
-This library is a PHP 7.1 helper library for creating HTML output.
+This library is a PHP helper library for creating HTML output.
 
 Install
---------------
+-------
 
 This extension can be installed using Composer
 
-`composer require netzmacht/html:~2.0`
+`composer require netzmacht/html:^3.0`
+
+Requirements
+------------
+
+PHP `^8.1`
+
 
 Basic Usage
---------------
+-----------
 
 Define the attributes in the View:
 
@@ -80,30 +86,5 @@ Now you can output the whole element:
 <article>
     <?= $paragraph; ?>
 </article>
-
-```
-
-Integrations
-------------
-
-This library provides a [Symfony Bundle](https://www.symfony.com) and [Contao Manager Plugin](https://contao.org) as integration.
-
-### Symfony 
-
-```php
-<?php 
-
-// Register your bundle in the AppKernel
-public function getBundles()
-{
-    return [
-        // ...
-        new Netzmacht\Html\Infrastructure\SymfonyBundle\NetzmachtHtmlBundle()
-    ];
-}
-
-// Use the factory
-$factory = $container->get('netzmacht.html.factory');
-$element = $factory->create('p');
 
 ```

@@ -8,6 +8,7 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 use Netzmacht\Html\Exception\InvalidArgumentException;
+use Traversable;
 
 use function array_filter;
 use function array_map;
@@ -18,16 +19,12 @@ use function htmlspecialchars;
 use function implode;
 use function in_array;
 use function is_array;
-use function is_string;
 use function preg_match;
 use function sprintf;
-use function strlen;
 use function strpos;
 use function trim;
 
-/**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
+/** @SuppressWarnings(PHPMD.TooManyPublicMethods) */
 class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
 {
     /**
@@ -35,14 +32,12 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @var array<string,mixed>
      */
-    protected $attributes;
+    private array $attributes;
 
     /**
      * List of boolean attributes.
-     *
-     * @var list<string>
      */
-    private static $booleanAttributes = [
+    private const BOOLEAN_ATTRIBUTES = [
         'compact',
         'declare',
         'defer',
@@ -58,11 +53,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
         'selected',
     ];
 
-    /**
-     * Construct.
-     *
-     * @param array<string,mixed> $attributes Attributes.
-     */
+    /** @param array<string,mixed> $attributes Attributes. */
     public function __construct(array $attributes = [])
     {
         $this->attributes = [
@@ -84,7 +75,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @throws InvalidArgumentException When an invalid value is given.
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, mixed $value): self
     {
         $this->guardValidName($name);
 
@@ -103,10 +94,8 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @param string $name    Attribute name.
      * @param mixed  $default Return default value if attribute does not exist.
-     *
-     * @return mixed
      */
-    public function getAttribute(string $name, $default = null)
+    public function getAttribute(string $name, mixed $default = null): mixed
     {
         if ($this->hasAttribute($name)) {
             return $this->attributes[$name];
@@ -132,7 +121,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @return $this
      */
-    public function removeAttribute(string $name)
+    public function removeAttribute(string $name): self
     {
         if ($name === 'class') {
             $this->attributes['class'] = [];
@@ -150,7 +139,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @return $this
      */
-    public function addAttributes(array $attributes)
+    public function addAttributes(array $attributes): self
     {
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);
@@ -178,7 +167,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
     {
         $classes = $this->getAttribute('class');
 
-        return in_array($name, $classes);
+        return in_array($name, $classes, true);
     }
 
     /**
@@ -190,7 +179,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @throws InvalidArgumentException When an invalid class value is given.
      */
-    public function addClass(string $class)
+    public function addClass(string $class): self
     {
         // split multiple classes
         if (strpos($class, ' ') !== false) {
@@ -219,7 +208,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @throws InvalidArgumentException When an invalid id value is given.
      */
-    public function setId(string $value)
+    public function setId(string $value): self
     {
         $this->guardValidId($value);
         $this->setAttribute('id', $value);
@@ -244,7 +233,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      */
     public function removeClass(string $name)
     {
-        $index = array_search($name, $this->attributes['class']);
+        $index = array_search($name, $this->attributes['class'], true);
 
         if ($index !== false) {
             unset($this->attributes['class'][$index]);
@@ -261,7 +250,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @return $this
      */
-    public function addClasses(array $classes)
+    public function addClasses(array $classes): self
     {
         foreach ($classes as $class) {
             $this->addClass($class);
@@ -270,10 +259,8 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    /** @return Traversable<string,mixed> */
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->attributes);
     }
@@ -284,7 +271,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
         $template = ' %s="%s"';
 
         foreach ($this->attributes as $name => $value) {
-            if (in_array($name, self::$booleanAttributes)) {
+            if (in_array($name, self::BOOLEAN_ATTRIBUTES, true)) {
                 if ($value) {
                     $buffer .= ' ' . htmlspecialchars($name);
                 }
@@ -303,34 +290,22 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
         return trim($buffer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return $this->hasAttribute($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->getAttribute($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->setAttribute($offset, $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         $this->removeAttribute($offset);
     }
@@ -362,7 +337,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @throws InvalidArgumentException When value is not an array.
      */
-    private function guardIsArray($value, string $error = 'Value has to be an array'): void
+    private function guardIsArray(mixed $value, string $error = 'Value has to be an array'): void
     {
         if (! is_array($value)) {
             throw new InvalidArgumentException($error, 0, null, $value);
@@ -372,21 +347,11 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
     /**
      * Guard that the id is valid.
      *
-     * @param string $value Given value.
-     *
      * @throws InvalidArgumentException When an invalid css id value is given.
      */
     private function guardValidId(string $value): void
     {
-        if ($value === null) {
-            return;
-        }
-
-        if (! is_string($value)) {
-            throw new InvalidArgumentException('Css ID has to be a string.', 0, null, $value);
-        }
-
-        if (strlen($value) < 1) {
+        if ($value === '') {
             throw new InvalidArgumentException('Css ID requires at least one character.', 0, null, $value);
         }
 
