@@ -1,13 +1,6 @@
 <?php
 
-/**
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
- * @license    LGPL 3.0
- * @filesource
- *
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Html\Element;
 
@@ -18,54 +11,52 @@ use Netzmacht\Html\Element\StandaloneElement;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class StandaloneElementSpec extends ObjectBehavior
+use const PHP_EOL;
+
+final class StandaloneElementSpec extends ObjectBehavior
 {
-    private $attributes = ['class' => ['example'], 'src' => 'file.png'];
+    /** @var array{class: list<string>, src: string} */
+    private array $attributes = ['class' => ['example'], 'src' => 'file.png'];
 
-
-    function let()
+    public function let(): void
     {
         $this->beConstructedWith('img', $this->attributes);
     }
 
-
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(Element::class);
         $this->shouldHaveType(StandaloneElement::class);
     }
 
-
-    function it_has_attributes()
+    public function it_has_attributes(): void
     {
         $this->shouldHaveType(Attributes::class);
     }
 
-    function it_generates_attribute()
+    public function it_generates_attribute(): void
     {
         $this->generateAttributes()->shouldReturn('class="example" src="file.png"');
     }
 
-
-    function it_has_a_tag()
+    public function it_has_a_tag(): void
     {
         $this->getTag()->shouldReturn('img');
     }
 
-
-    function it_casts_to_string()
+    public function it_casts_to_string(): void
     {
         $this->generate()->shouldReturn('<img class="example" src="file.png">' . PHP_EOL);
     }
 
-    function it_is_appendable(Node $parent)
+    public function it_is_appendable(Node $parent): void
     {
         $parent->addChild($this, Argument::any())->shouldBeCalled();
 
         $this->appendTo($parent)->shouldReturn($this);
     }
 
-    function it_is_appendable_to_position(Node $parent)
+    public function it_is_appendable_to_position(Node $parent): void
     {
         $parent->addChild($this, Node::POSITION_FIRST)->shouldBeCalled();
 

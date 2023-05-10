@@ -17,7 +17,7 @@ final class StandaloneElement extends AbstractElement
     {
         return sprintf(
             '<%s %s>' . PHP_EOL,
-            $this->tag,
+            $this->getTag(),
             $this->generateAttributes(),
         );
     }

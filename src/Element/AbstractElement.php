@@ -13,7 +13,7 @@ abstract class AbstractElement extends Attributes implements Element
      * @param string              $tag        Tag name.
      * @param array<string,mixed> $attributes List of attributes.
      */
-    public function __construct(protected string $tag, array $attributes = [])
+    public function __construct(private readonly string $tag, array $attributes = [])
     {
         parent::__construct($attributes);
     }

@@ -179,7 +179,7 @@ class Attributes implements CastsToString, IteratorAggregate, ArrayAccess
      *
      * @throws InvalidArgumentException When an invalid class value is given.
      */
-    public function addClass(string $class)
+    public function addClass(string $class): self
     {
         // split multiple classes
         if (strpos($class, ' ') !== false) {

@@ -120,10 +120,10 @@ class Node extends AbstractElement
     {
         return sprintf(
             '<%s %s>%s</%s>' . PHP_EOL,
-            $this->tag,
+            $this->getTag(),
             $this->generateAttributes(),
             $this->generateChildren(),
-            $this->tag,
+            $this->getTag(),
         );
     }
 

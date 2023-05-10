@@ -3,6 +3,7 @@ phpcq:
     - https://phpcq.github.io/repository/repository.json
   directories:
     - src
+    - spec
   artifact: .phpcq/build
 
   plugins:
@@ -50,20 +51,25 @@ tasks:
   fix:
     - composer-normalize-fix
     - phpcbf
+
   verify:
     - composer-require-checker
     - composer-normalize
+
   analyze:
     - phploc
     - phpcpd
     - phpmd
     - phpcs
     - psalm
+
   default:
     - verify
     - analyze
+
   phpcpd:
     plugin: phpcpd
+
   phpmd:
     plugin: phpmd
     directories:

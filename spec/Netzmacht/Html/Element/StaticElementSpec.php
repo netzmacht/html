@@ -1,39 +1,31 @@
 <?php
 
-/**
- * @package    netzmacht/html
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
- * @license    LGPL 3.0
- * @filesource
- *
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Html\Element;
 
 use Netzmacht\Html\Element;
 use Netzmacht\Html\Element\StaticElement;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-class StaticElementSpec extends ObjectBehavior
+final class StaticElementSpec extends ObjectBehavior
 {
-    const HTML = '<b>Test</b>';
+    private const HTML = '<b>Test</b>';
 
-    function let()
+    public function let(): void
     {
-        $this->beConstructedWith(static::HTML);
+        $this->beConstructedWith(self::HTML);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(StaticElement::class);
     }
 
-    function it_casts_to_string()
+    public function it_casts_to_string(): void
     {
         $this->shouldHaveType(Element::class);
-        $this->generate()->shouldReturn(static::HTML);
-        $this->__toString()->shouldReturn(static::HTML);
+        $this->generate()->shouldReturn(self::HTML);
+        $this->__toString()->shouldReturn(self::HTML);
     }
 }
