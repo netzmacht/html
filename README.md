@@ -1,7 +1,7 @@
 HTML helper library
 ===================
 
-[![Build Status](https://img.shields.io/github/workflow/status/netzmacht/html/Code%20Quality%20Diagnostics/master?style=for-the-badge)](https://github.com/netzmacht/html/actions/workflows/diagnostics.yml)
+[![Build Status](https://img.shields.io/github/workflow/status/netzmacht/html/Code%20Quality%20Diagnostics/master?style=flat-square)](https://github.com/netzmacht/html/actions/workflows/diagnostics.yml)
 [![Version](http://img.shields.io/packagist/v/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![License](http://img.shields.io/packagist/l/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/html.svg?style=flat-square)](http://packagist.org/packages/netzmacht/html)
